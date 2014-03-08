@@ -1,0 +1,14 @@
+version: "1.0.0"
+time:
+  SUNRISE: 1.0
+  DAY: 1.0
+  SUNSET: 1.0
+  NIGHT: 1.0
+world:
+  world: 1.0
+biome:
+  PLAINS: 1.0
+environment:
+  NORMAL: 1.0
+  NETHER: 1.0
+  THE_END: 1.0
