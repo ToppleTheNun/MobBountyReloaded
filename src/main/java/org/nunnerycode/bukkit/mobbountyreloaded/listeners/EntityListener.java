@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
+import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
 
 import java.text.DecimalFormat;
 
@@ -34,19 +35,39 @@ public final class EntityListener implements Listener {
     double d =
         RandomRangeUtils.randomRangeDoubleInclusive(rewardRange.getMinimumDouble(),
                                                     rewardRange.getMaximumDouble());
+
+    double biomeMult =
+        plugin.getIvorySettings().getDouble(
+            "multipliers.biome." + livingEntity.getLocation().getBlock().getBiome().name(), 1.0);
+    double timeMult = plugin.getIvorySettings().getDouble(
+        "multipliers.time." + TimeOfDay.getTimeOfDay(livingEntity.getWorld().getTime()).name(),
+        1.0);
+    double worldMult =
+        plugin.getIvorySettings().getDouble(
+            "multipliers.world." + livingEntity.getWorld().getName(), 1.0);
+    double envMult =
+        plugin.getIvorySettings()
+            .getDouble("multipliers.environment." + livingEntity.getWorld().getEnvironment().name(),
+                       1.0);
+
+    d = d * biomeMult * timeMult * worldMult * envMult;
+
     plugin.getEconomyHandler().transaction(player, d);
     if (d > 0.0) {
       MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
           .getString("language.messages.reward", "language.messages.reward"),
-                                              new String[][]{{"%amount%", plugin.getEconomyHandler().format(d)},
+                                              new String[][]{{"%amount%",
+                                                              plugin.getEconomyHandler().format(d)},
                                                              {"%mob%",
                                                               livingEntity.getType().name()}});
     } else if (d < 0.0) {
       MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
           .getString("language.messages.fine", "language.messages.fine"),
-                                              new String[][]{{"%amount%", plugin.getEconomyHandler().format(Math.abs(d))},
-                                                             {"%mob%",
-                                                              livingEntity.getType().name()}});
+                                              new String[][]{
+                                                  {"%amount%", plugin.getEconomyHandler().format(
+                                                      Math.abs(d))},
+                                                  {"%mob%",
+                                                   livingEntity.getType().name()}});
     }
   }
 
