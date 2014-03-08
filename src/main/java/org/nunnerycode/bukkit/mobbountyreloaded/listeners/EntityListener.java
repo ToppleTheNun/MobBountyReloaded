@@ -25,7 +25,7 @@ public final class EntityListener implements Listener {
   public void onEntityDeathEvent(EntityDeathEvent event) {
     LivingEntity livingEntity = event.getEntity();
     Player player = livingEntity.getKiller();
-    if (player == null || player.hasPermission("!mobbountyreloaded.earn")) {
+    if (player == null || !player.hasPermission("mobbountyreloaded.earn")) {
       return;
     }
     DoubleRange rewardRange = plugin.getMobHandler().getReward(livingEntity.getType());
