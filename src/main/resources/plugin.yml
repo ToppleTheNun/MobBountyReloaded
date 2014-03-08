@@ -3,3 +3,7 @@ author: ToppleTheNun
 version: ${project.build.version}
 name: ${project.build.name}
 depend: [Vault]
+
+permissions:
+  mobbountyreloaded.earn:
+    default: true
