@@ -13,12 +13,9 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
 
-import java.text.DecimalFormat;
-
 public final class EntityListener implements Listener {
 
   private MobBountyReloadedPlugin plugin;
-  private DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
   public EntityListener(MobBountyReloadedPlugin plugin) {
     this.plugin = plugin;
