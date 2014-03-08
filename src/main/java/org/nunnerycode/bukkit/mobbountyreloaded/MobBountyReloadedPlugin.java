@@ -26,6 +26,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
   private IvorySettings ivorySettings;
   private VersionedIvoryYamlConfiguration rewardYAML;
   private VersionedIvoryYamlConfiguration languageYAML;
+  private VersionedIvoryYamlConfiguration multipliersYAML;
   private IMobHandler mobHandler;
   private IEconomyHandler economyHandler;
   private EntityListener entityListener;
@@ -52,7 +53,16 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
       debug(Level.INFO, "Updating language.yml");
     }
 
-    ivorySettings = IvorySettings.loadFromFiles(getRewardYAML(), getLanguageYAML());
+    multipliersYAML =
+        new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "multipliers.yml"),
+                                            getResource("multipliers.yml"),
+                                            VersionUpdateType.BACKUP_AND_UPDATE);
+    if (multipliersYAML.update()) {
+      getLogger().info("Updating multipliers.yml");
+      debug(Level.INFO, "Updating multipliers.yml");
+    }
+
+    ivorySettings = IvorySettings.loadFromFiles(getRewardYAML(), getLanguageYAML(), getMultipliersYAML());
 
     mobHandler = new MobHandler(this);
 
@@ -105,5 +115,9 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
 
   public VersionedIvoryYamlConfiguration getLanguageYAML() {
     return languageYAML;
+  }
+
+  public VersionedIvoryYamlConfiguration getMultipliersYAML() {
+    return multipliersYAML;
   }
 }
