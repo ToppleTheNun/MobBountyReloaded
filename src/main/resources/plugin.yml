@@ -1,0 +1,5 @@
+main: org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin
+author: ToppleTheNun
+version: ${project.build.version}
+name: ${project.build.name}
+depend: [Vault]

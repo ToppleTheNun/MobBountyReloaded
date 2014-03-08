@@ -1,0 +1,4 @@
+version: "1.0.0"
+messages:
+  reward: "&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!"
+  fine: "&4You were fined &F%amount%&4 for killing a &F%mob%&4!"
