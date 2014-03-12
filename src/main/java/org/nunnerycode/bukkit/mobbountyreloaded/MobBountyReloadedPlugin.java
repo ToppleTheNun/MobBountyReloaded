@@ -62,7 +62,8 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
       debug(Level.INFO, "Updating multipliers.yml");
     }
 
-    ivorySettings = IvorySettings.loadFromFiles(getRewardYAML(), getLanguageYAML(), getMultipliersYAML());
+    ivorySettings =
+        IvorySettings.loadFromFiles(getRewardYAML(), getLanguageYAML(), getMultipliersYAML());
 
     mobHandler = new MobHandler(this);
 
