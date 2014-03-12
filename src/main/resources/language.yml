@@ -1,4 +1,34 @@
-version: "1.0.0"
+version: 1.0.1
 messages:
-  reward: "&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!"
-  fine: "&4You were fined &F%amount%&4 for killing a &F%mob%&4!"
+  reward: '&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!'
+  fine: '&4You were fined &F%amount%&4 for killing a &F%mob%&4!'
+mob-names:
+  CREEPER: Creeper
+  SKELETON: Skeleton
+  SPIDER: Spider
+  GIANT: Giant
+  ZOMBIE: Zombie
+  SLIME: Slime
+  GHAST: Ghast
+  PIG_ZOMBIE: Pig Zombie
+  ENDERMAN: Enderman
+  CAVE_SPIDER: Cave Spider
+  SILVERFISH: Silverfish
+  BLAZE: Blaze
+  MAGMA_CUBE: Magma Cube
+  ENDER_DRAGON: Enderdragon
+  WITHER: Wither
+  BAT: Bat
+  WITCH: Witch
+  PIG: Pig
+  SHEEP: Sheep
+  COW: Cow
+  CHICKEN: Chicken
+  SQUID: Squid
+  WOLF: Wolf
+  MUSHROOM_COW: Mushroom Cow
+  SNOWMAN: Snowman
+  OCELOT: Ocelot
+  IRON_GOLEM: Iron Golem
+  HORSE: Horse
+  VILLAGER: Villager
