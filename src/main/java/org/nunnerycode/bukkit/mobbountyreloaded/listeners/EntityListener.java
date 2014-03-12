@@ -49,22 +49,25 @@ public final class EntityListener implements Listener {
 
     d = d * biomeMult * timeMult * worldMult * envMult;
 
+    String
+        mobName =
+        plugin.getIvorySettings().getString("language.mob-names." + livingEntity.getType().name(),
+                                            livingEntity.getType().name());
+
     plugin.getEconomyHandler().transaction(player, d);
     if (d > 0.0) {
       MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
           .getString("language.messages.reward", "language.messages.reward"),
                                               new String[][]{{"%amount%",
                                                               plugin.getEconomyHandler().format(d)},
-                                                             {"%mob%",
-                                                              livingEntity.getType().name()}});
+                                                             {"%mob%", mobName}});
     } else if (d < 0.0) {
       MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
           .getString("language.messages.fine", "language.messages.fine"),
                                               new String[][]{
                                                   {"%amount%", plugin.getEconomyHandler().format(
                                                       Math.abs(d))},
-                                                  {"%mob%",
-                                                   livingEntity.getType().name()}});
+                                                  {"%mob%", mobName}});
     }
   }
 
