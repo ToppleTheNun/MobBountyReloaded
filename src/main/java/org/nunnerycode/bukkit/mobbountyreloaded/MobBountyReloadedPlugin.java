@@ -1,7 +1,6 @@
 package org.nunnerycode.bukkit.mobbountyreloaded;
 
 import net.milkbowl.vault.economy.Economy;
-import net.nunnerycode.bukkit.libraries.ivory.config.IvoryYamlConfiguration;
 import net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfiguration;
 import net.nunnerycode.bukkit.libraries.ivory.settings.IvorySettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
@@ -11,46 +10,40 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.economy.IEconomyHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.mobs.IMobHandler;
+import org.nunnerycode.bukkit.mobbountyreloaded.commands.MobBountyCommands;
 import org.nunnerycode.bukkit.mobbountyreloaded.economy.EconomyHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.listeners.EntityListener;
 import org.nunnerycode.bukkit.mobbountyreloaded.mobs.MobHandler;
 
+import se.ranzdo.bukkit.methodcommand.CommandHandler;
+
 import java.io.File;
 import java.util.logging.Level;
 
-import static net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfiguration.VersionUpdateType;
+import static net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryConfiguration.VersionUpdateType;
 
 public final class MobBountyReloadedPlugin extends JavaPlugin {
 
   private DebugPrinter debugPrinter;
   private IvorySettings ivorySettings;
-  private VersionedIvoryYamlConfiguration rewardYAML;
-  private VersionedIvoryYamlConfiguration languageYAML;
-  private VersionedIvoryYamlConfiguration multipliersYAML;
   private IMobHandler mobHandler;
   private IEconomyHandler economyHandler;
   private EntityListener entityListener;
+  private VersionedIvoryYamlConfiguration rewardsYAML;
+  private VersionedIvoryYamlConfiguration multipliersYAML;
+  private VersionedIvoryYamlConfiguration languageYAML;
 
   @Override
   public void onEnable() {
     debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
 
-    rewardYAML =
+    rewardsYAML =
         new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "rewards.yml"),
                                             getResource("rewards.yml"),
                                             VersionUpdateType.BACKUP_AND_UPDATE);
-    if (rewardYAML.update()) {
-      getLogger().info("Updating rewards.yml");
+    if (rewardsYAML.update()) {
+      Bukkit.getLogger().info("Updating rewards.yml");
       debug(Level.INFO, "Updating rewards.yml");
-    }
-
-    languageYAML =
-        new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "language.yml"),
-                                            getResource("language.yml"),
-                                            VersionUpdateType.BACKUP_AND_UPDATE);
-    if (languageYAML.update()) {
-      getLogger().info("Updating language.yml");
-      debug(Level.INFO, "Updating language.yml");
     }
 
     multipliersYAML =
@@ -58,12 +51,20 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
                                             getResource("multipliers.yml"),
                                             VersionUpdateType.BACKUP_AND_UPDATE);
     if (multipliersYAML.update()) {
-      getLogger().info("Updating multipliers.yml");
+      Bukkit.getLogger().info("Updating multipliers.yml");
       debug(Level.INFO, "Updating multipliers.yml");
     }
 
-    ivorySettings =
-        IvorySettings.loadFromFiles(getRewardYAML(), getLanguageYAML(), getMultipliersYAML());
+    languageYAML =
+        new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "language.yml"),
+                                            getResource("language.yml"),
+                                            VersionUpdateType.BACKUP_AND_UPDATE);
+    if (languageYAML.update()) {
+      Bukkit.getLogger().info("Updating language.yml");
+      debug(Level.INFO, "Updating language.yml");
+    }
+
+    ivorySettings = IvorySettings.loadFromFiles(rewardsYAML, multipliersYAML, languageYAML);
 
     mobHandler = new MobHandler(this);
 
@@ -89,6 +90,9 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
     entityListener = new EntityListener(this);
     Bukkit.getPluginManager().registerEvents(entityListener, this);
 
+    CommandHandler commandHandler = new CommandHandler(this);
+    commandHandler.registerCommands(new MobBountyCommands(this));
+
     debug(Level.INFO, "v" + getDescription().getVersion() + " enabled");
   }
 
@@ -96,10 +100,6 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
     if (debugPrinter != null) {
       debugPrinter.debug(level, messages);
     }
-  }
-
-  public IvoryYamlConfiguration getRewardYAML() {
-    return rewardYAML;
   }
 
   public IvorySettings getIvorySettings() {
@@ -114,11 +114,16 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
     return economyHandler;
   }
 
-  public VersionedIvoryYamlConfiguration getLanguageYAML() {
-    return languageYAML;
+  public VersionedIvoryYamlConfiguration getRewardsYAML() {
+    return rewardsYAML;
   }
 
   public VersionedIvoryYamlConfiguration getMultipliersYAML() {
     return multipliersYAML;
   }
+
+  public VersionedIvoryYamlConfiguration getLanguageYAML() {
+    return languageYAML;
+  }
+
 }
