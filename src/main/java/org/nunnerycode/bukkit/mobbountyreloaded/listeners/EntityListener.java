@@ -28,7 +28,8 @@ public final class EntityListener implements Listener {
     if (player == null || !player.hasPermission("mobbountyreloaded.earn")) {
       return;
     }
-    DoubleRange rewardRange = plugin.getMobHandler().getReward(livingEntity.getType());
+    DoubleRange rewardRange =
+        plugin.getMobHandler().getReward(livingEntity.getType(), livingEntity.getWorld());
     double d =
         RandomRangeUtils.randomRangeDoubleInclusive(rewardRange.getMinimumDouble(),
                                                     rewardRange.getMaximumDouble());
