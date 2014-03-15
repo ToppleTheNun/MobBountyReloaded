@@ -7,7 +7,7 @@ depend: [Vault]
 permissions:
   mobbountyreloaded.earn:
     default: true
-  mobbountyreloaded.command.list
+  mobbountyreloaded.command.list:
     default: true
 
 commands:
