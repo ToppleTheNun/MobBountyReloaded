@@ -2,6 +2,7 @@ package org.nunnerycode.bukkit.mobbountyreloaded.mobs;
 
 import org.apache.commons.lang.math.DoubleRange;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.mobs.IMobHandler;
@@ -20,8 +21,13 @@ public final class MobHandler implements IMobHandler {
   }
 
   @Override
-  public DoubleRange getReward(EntityType entityType) {
-    String s = plugin.getIvorySettings().getString("rewards.reward." + entityType.name(), "0:0");
+  public DoubleRange getReward(EntityType entityType, World world) {
+    String s = plugin.getIvorySettings()
+            .getString("rewards." + world.getName() + "." + entityType.name(), "0:0");
+    if (s.equals("0:0")) {
+      s = plugin.getIvorySettings()
+          .getString("rewards.default." + entityType.name(), "0:0");
+    }
     String[] array = s.split(":");
     DoubleRange dr;
     if (array.length == 0) {
@@ -35,13 +41,13 @@ public final class MobHandler implements IMobHandler {
   }
 
   @Override
-  public void setReward(EntityType entityType, String reward) {
-    plugin.getIvorySettings().set("rewards." + entityType.name(), reward);
+  public void setReward(EntityType entityType, World world, String reward) {
+    plugin.getIvorySettings().set("rewards." + world.getName() + "." + entityType.name(), reward);
   }
 
   @Override
-  public void setReward(EntityType entityType, DoubleRange reward) {
-    setReward(entityType, new RangeWrapper(reward).toString());
+  public void setReward(EntityType entityType, World world, DoubleRange reward) {
+    setReward(entityType, world, new RangeWrapper(reward).toString());
   }
 
 }
