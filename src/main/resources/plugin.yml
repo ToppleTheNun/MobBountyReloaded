@@ -12,3 +12,4 @@ permissions:
 
 commands:
   mobbountyreloaded:
+    aliases: [mbr]
