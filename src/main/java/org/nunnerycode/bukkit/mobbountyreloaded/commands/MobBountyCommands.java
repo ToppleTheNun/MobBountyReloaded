@@ -24,7 +24,7 @@ public class MobBountyCommands {
     this.plugin = plugin;
   }
 
-  @Command(identifier = "mb list", permissions = "mobbountyreloaded.command.list")
+  @Command(identifier = "mobbountyreloaded list", permissions = "mobbountyreloaded.command.list")
   public void listSubcommand(CommandSender sender,
                              @Arg(name = "world", def = "") String worldName) {
     if (worldName.equals("")) {
