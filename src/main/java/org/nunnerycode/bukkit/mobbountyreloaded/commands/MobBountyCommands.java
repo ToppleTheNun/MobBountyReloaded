@@ -38,7 +38,7 @@ public class MobBountyCommands {
     World world = Bukkit.getWorld(worldName);
     if (world == null) {
       MessageUtils.sendColoredMessage(sender, plugin.getIvorySettings()
-          .getString("language.messages.no-access", "language.messages.world-does-not-exist"));
+          .getString("language.messages.world-does-not-exist", "language.messages.world-does-not-exist"));
       return;
     }
     for (EntityType entityType : EntityType.values()) {
