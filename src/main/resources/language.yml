@@ -3,6 +3,7 @@ messages:
   reward: '&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!'
   fine: '&4You were fined &F%amount%&4 for killing a &F%mob%&4!'
   no-access: '&CYou cannot do that.'
+  world-does-not-exist: '&CThat world does not exist.'
   list-reward: '&F%mob% | &2%value%'
   list-fine: '&F%mob% | &4%value%'
   list-reward-range: '&F%mob% | &2%value1%&F:&2%value2%'
