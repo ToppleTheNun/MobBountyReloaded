@@ -38,7 +38,8 @@ public class MobBountyCommands {
     World world = Bukkit.getWorld(worldName);
     if (world == null) {
       MessageUtils.sendColoredMessage(sender, plugin.getIvorySettings()
-          .getString("language.messages.world-does-not-exist", "language.messages.world-does-not-exist"));
+          .getString("language.messages.world-does-not-exist",
+                     "language.messages.world-does-not-exist"));
       return;
     }
     for (EntityType entityType : EntityType.values()) {
@@ -47,10 +48,14 @@ public class MobBountyCommands {
         if (doubleRange.getMaximumDouble() == doubleRange.getMinimumDouble()) {
           MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings()
               .getString("language.messages.list-fine", ""), new String[][]{
+              {"%mob%", plugin.getIvorySettings()
+                  .getString("language.mob-names." + entityType.name(), entityType.name())},
               {"%value%", DECIMAL_FORMAT.format(doubleRange.getMaximumDouble())}});
         } else {
           MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings()
               .getString("language.messages.list-fine-range", ""), new String[][]{
+              {"%mob%", plugin.getIvorySettings()
+                  .getString("language.mob-names." + entityType.name(), entityType.name())},
               {"%value1%", DECIMAL_FORMAT.format(doubleRange.getMinimumDouble())},
               {"%value2%", DECIMAL_FORMAT.format(doubleRange.getMaximumDouble())}});
         }
@@ -58,10 +63,14 @@ public class MobBountyCommands {
         if (doubleRange.getMaximumDouble() == doubleRange.getMinimumDouble()) {
           MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings()
               .getString("language.messages.list-reward", ""), new String[][]{
+              {"%mob%", plugin.getIvorySettings()
+                  .getString("language.mob-names." + entityType.name(), entityType.name())},
               {"%value%", DECIMAL_FORMAT.format(doubleRange.getMaximumDouble())}});
         } else {
           MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings()
               .getString("language.messages.list-reward-range", ""), new String[][]{
+              {"%mob%", plugin.getIvorySettings()
+                  .getString("language.mob-names." + entityType.name(), entityType.name())},
               {"%value1%", DECIMAL_FORMAT.format(doubleRange.getMaximumDouble())},
               {"%value2%", DECIMAL_FORMAT.format(doubleRange.getMinimumDouble())}});
         }
