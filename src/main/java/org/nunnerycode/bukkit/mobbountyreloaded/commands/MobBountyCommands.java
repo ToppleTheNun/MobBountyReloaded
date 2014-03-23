@@ -17,8 +17,8 @@ import java.text.DecimalFormat;
 
 public class MobBountyCommands {
 
-  private MobBountyReloadedPlugin plugin;
   private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+  private MobBountyReloadedPlugin plugin;
 
   public MobBountyCommands(MobBountyReloadedPlugin plugin) {
     this.plugin = plugin;
