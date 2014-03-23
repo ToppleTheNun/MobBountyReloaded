@@ -2,8 +2,9 @@ package org.nunnerycode.bukkit.mobbountyreloaded.events;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.nunnerycode.bukkit.mobbountyreloaded.api.events.MobBountyReloadedCancellableEvent;
 
-public final class MobBountyReloadedRewardEvent {
+public final class MobBountyReloadedRewardEvent extends MobBountyReloadedCancellableEvent {
 
   private final Player player;
   private final LivingEntity entity;
