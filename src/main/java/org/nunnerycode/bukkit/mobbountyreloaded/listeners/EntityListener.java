@@ -4,6 +4,7 @@ import net.nunnerycode.bukkit.libraries.ivory.utils.MessageUtils;
 import net.nunnerycode.bukkit.libraries.ivory.utils.RandomRangeUtils;
 
 import org.apache.commons.lang.math.DoubleRange;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
+import org.nunnerycode.bukkit.mobbountyreloaded.events.MobBountyReloadedRewardEvent;
 
 public final class EntityListener implements Listener {
 
@@ -49,6 +51,15 @@ public final class EntityListener implements Listener {
                        1.0);
 
     d = d * biomeMult * timeMult * worldMult * envMult;
+
+    MobBountyReloadedRewardEvent mbrre = new MobBountyReloadedRewardEvent(player, livingEntity, d);
+    Bukkit.getPluginManager().callEvent(mbrre);
+
+    if (mbrre.isCancelled()) {
+      return;
+    }
+
+    d = mbrre.getAmount();
 
     String
         mobName =
