@@ -12,6 +12,7 @@ import org.nunnerycode.bukkit.mobbountyreloaded.api.economy.IEconomyHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.mobs.IMobHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.commands.MobBountyCommands;
 import org.nunnerycode.bukkit.mobbountyreloaded.economy.EconomyHandler;
+import org.nunnerycode.bukkit.mobbountyreloaded.exploits.ExploitListener;
 import org.nunnerycode.bukkit.mobbountyreloaded.listeners.EntityListener;
 import org.nunnerycode.bukkit.mobbountyreloaded.mobs.MobHandler;
 
@@ -29,6 +30,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
   private IMobHandler mobHandler;
   private IEconomyHandler economyHandler;
   private EntityListener entityListener;
+  private ExploitListener exploitListener;
   private VersionedIvoryYamlConfiguration rewardsYAML;
   private VersionedIvoryYamlConfiguration multipliersYAML;
   private VersionedIvoryYamlConfiguration languageYAML;
@@ -100,6 +102,8 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
 
     entityListener = new EntityListener(this);
     Bukkit.getPluginManager().registerEvents(entityListener, this);
+    exploitListener = new ExploitListener(this);
+    Bukkit.getPluginManager().registerEvents(exploitListener, this);
 
     CommandHandler commandHandler = new CommandHandler(this);
     commandHandler.registerCommands(new MobBountyCommands(this));
