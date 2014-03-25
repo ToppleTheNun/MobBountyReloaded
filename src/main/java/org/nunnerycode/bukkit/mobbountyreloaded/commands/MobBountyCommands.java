@@ -71,8 +71,8 @@ public class MobBountyCommands {
               .getString("language.messages.list-reward-range", ""), new String[][]{
               {"%mob%", plugin.getIvorySettings()
                   .getString("language.mob-names." + entityType.name(), entityType.name())},
-              {"%value1%", DECIMAL_FORMAT.format(doubleRange.getMaximumDouble())},
-              {"%value2%", DECIMAL_FORMAT.format(doubleRange.getMinimumDouble())}});
+              {"%value1%", DECIMAL_FORMAT.format(doubleRange.getMinimumDouble())},
+              {"%value2%", DECIMAL_FORMAT.format(doubleRange.getMaximumDouble())}});
         }
       }
     }
