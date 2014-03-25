@@ -32,6 +32,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
   private VersionedIvoryYamlConfiguration rewardsYAML;
   private VersionedIvoryYamlConfiguration multipliersYAML;
   private VersionedIvoryYamlConfiguration languageYAML;
+  private VersionedIvoryYamlConfiguration exploitsYAML;
 
   @Override
   public void onEnable() {
@@ -42,7 +43,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
                                             getResource("rewards.yml"),
                                             VersionUpdateType.BACKUP_AND_UPDATE);
     if (rewardsYAML.update()) {
-      Bukkit.getLogger().info("Updating rewards.yml");
+      getLogger().info("Updating rewards.yml");
       debug(Level.INFO, "Updating rewards.yml");
     }
 
@@ -51,7 +52,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
                                             getResource("multipliers.yml"),
                                             VersionUpdateType.BACKUP_AND_UPDATE);
     if (multipliersYAML.update()) {
-      Bukkit.getLogger().info("Updating multipliers.yml");
+      getLogger().info("Updating multipliers.yml");
       debug(Level.INFO, "Updating multipliers.yml");
     }
 
@@ -60,11 +61,21 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
                                             getResource("language.yml"),
                                             VersionUpdateType.BACKUP_AND_UPDATE);
     if (languageYAML.update()) {
-      Bukkit.getLogger().info("Updating language.yml");
+      getLogger().info("Updating language.yml");
       debug(Level.INFO, "Updating language.yml");
     }
 
-    ivorySettings = IvorySettings.loadFromFiles(rewardsYAML, multipliersYAML, languageYAML);
+    exploitsYAML =
+        new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "exploits.yml"),
+                                            getResource("exploits.yml"),
+                                            VersionUpdateType.BACKUP_AND_UPDATE);
+    if (languageYAML.update()) {
+      getLogger().info("Updating exploits.yml");
+      debug(Level.INFO, "Updating exploits.yml");
+    }
+
+    ivorySettings =
+        IvorySettings.loadFromFiles(rewardsYAML, multipliersYAML, languageYAML, exploitsYAML);
 
     mobHandler = new MobHandler(this);
 
@@ -126,4 +137,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
     return languageYAML;
   }
 
+  public VersionedIvoryYamlConfiguration getExploitsYAML() {
+    return exploitsYAML;
+  }
 }
