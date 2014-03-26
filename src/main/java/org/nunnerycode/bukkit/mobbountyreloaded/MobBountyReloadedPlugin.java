@@ -71,7 +71,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
         new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "exploits.yml"),
                                             getResource("exploits.yml"),
                                             VersionUpdateType.BACKUP_AND_UPDATE);
-    if (languageYAML.update()) {
+    if (exploitsYAML.update()) {
       getLogger().info("Updating exploits.yml");
       debug(Level.INFO, "Updating exploits.yml");
     }
