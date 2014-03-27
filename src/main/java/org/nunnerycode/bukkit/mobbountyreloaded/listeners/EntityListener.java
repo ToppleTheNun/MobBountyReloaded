@@ -57,6 +57,12 @@ public final class EntityListener implements Listener {
             .getDouble("multipliers.environment." + livingEntity.getWorld().getEnvironment().name(),
                        1.0);
     double enchMult = 1.0;
+    double weatherMult;
+    if (player.getWorld().isThundering()) {
+      weatherMult = plugin.getIvorySettings().getDouble("multipliers.weather.stormy", 1.0);
+    } else {
+      weatherMult = plugin.getIvorySettings().getDouble("multipliers.weather.sunny", 1.0);
+    }
 
     List<String> enchStrings =
         plugin.getIvorySettings()
@@ -80,7 +86,7 @@ public final class EntityListener implements Listener {
       enchMult *= NumberUtils.toDouble(split[2]);
     }
 
-    d = d * biomeMult * timeMult * worldMult * envMult * enchMult;
+    d = d * biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult;
 
     MobBountyReloadedRewardEvent mbrre = new MobBountyReloadedRewardEvent(player, livingEntity, d);
     Bukkit.getPluginManager().callEvent(mbrre);
