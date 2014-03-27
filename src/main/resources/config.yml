@@ -1,0 +1,8 @@
+version: "1.0.0"
+on-death-to-monster-loss:
+  percentage: false
+  value: 150.0
+on-death-to-player-loss:
+  percentage: true
+  value: 50.0
+  killer-gains-losses: true
