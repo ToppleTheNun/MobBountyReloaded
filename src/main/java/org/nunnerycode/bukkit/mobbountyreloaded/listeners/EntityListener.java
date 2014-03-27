@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
@@ -27,6 +28,27 @@ public final class EntityListener implements Listener {
 
   public EntityListener(MobBountyReloadedPlugin plugin) {
     this.plugin = plugin;
+  }
+
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onPlayerDeathEvent(PlayerDeathEvent event) {
+    Player player = event.getEntity();
+    Player killer = player.getKiller();
+    if (killer == null) {
+      double bal = plugin.getEconomyHandler().getBalance(player);
+      boolean isPerc = plugin.getIvorySettings().getBoolean("config.on-death-to-monster-loss.percentage", false);
+      double perc = plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
+      double newBal = isPerc ? bal - bal * perc : bal - perc;
+      plugin.getEconomyHandler().setBalance(player, newBal);
+    } else {
+      double bal = plugin.getEconomyHandler().getBalance(player);
+      boolean isPerc = plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
+      double perc = plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
+      plugin.getEconomyHandler().take(player, Math.abs(isPerc ? bal * perc : bal - perc));
+      if (plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
+        plugin.getEconomyHandler().give(killer, Math.abs(isPerc ? bal * perc : bal - perc));
+      }
+    }
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
