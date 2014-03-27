@@ -31,14 +31,28 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
   private IEconomyHandler economyHandler;
   private EntityListener entityListener;
   private ExploitListener exploitListener;
+  private VersionedIvoryYamlConfiguration configYAML;
   private VersionedIvoryYamlConfiguration rewardsYAML;
   private VersionedIvoryYamlConfiguration multipliersYAML;
   private VersionedIvoryYamlConfiguration languageYAML;
   private VersionedIvoryYamlConfiguration exploitsYAML;
 
+  public VersionedIvoryYamlConfiguration getConfigYAML() {
+    return configYAML;
+  }
+
   @Override
   public void onEnable() {
     debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
+
+    configYAML =
+        new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "config.yml"),
+                                            getResource("config.yml"),
+                                            VersionUpdateType.BACKUP_AND_UPDATE);
+    if (configYAML.update()) {
+      getLogger().info("Updating config.yml");
+      debug(Level.INFO, "Updating config.yml");
+    }
 
     rewardsYAML =
         new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "rewards.yml"),
@@ -77,7 +91,8 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
     }
 
     ivorySettings =
-        IvorySettings.loadFromFiles(rewardsYAML, multipliersYAML, languageYAML, exploitsYAML);
+        IvorySettings
+            .loadFromFiles(configYAML, rewardsYAML, multipliersYAML, languageYAML, exploitsYAML);
 
     mobHandler = new MobHandler(this);
 
