@@ -56,4 +56,12 @@ public final class EconomyHandler implements IEconomyHandler {
     return economy.format(amount);
   }
 
+  @Override
+  public double getBalance(Player player) {
+    if (economy == null) {
+      return 0;
+    }
+    return economy.getBalance(player.getName());
+  }
+
 }

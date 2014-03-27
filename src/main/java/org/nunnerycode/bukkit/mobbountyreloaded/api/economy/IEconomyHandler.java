@@ -14,4 +14,6 @@ public interface IEconomyHandler {
 
   String format(double amount);
 
+  double getBalance(Player player);
+
 }
