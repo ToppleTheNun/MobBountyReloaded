@@ -159,4 +159,5 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
   public VersionedIvoryYamlConfiguration getExploitsYAML() {
     return exploitsYAML;
   }
+
 }
