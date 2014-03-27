@@ -4,16 +4,22 @@ import net.nunnerycode.bukkit.libraries.ivory.utils.MessageUtils;
 import net.nunnerycode.bukkit.libraries.ivory.utils.RandomRangeUtils;
 
 import org.apache.commons.lang.math.DoubleRange;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
 import org.nunnerycode.bukkit.mobbountyreloaded.events.MobBountyReloadedRewardEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class EntityListener implements Listener {
 
@@ -30,6 +36,7 @@ public final class EntityListener implements Listener {
     if (player == null || !player.hasPermission("mobbountyreloaded.earn")) {
       return;
     }
+    ItemStack itemStack = player.getItemInHand();
     DoubleRange rewardRange =
         plugin.getMobHandler().getReward(livingEntity.getType(), livingEntity.getWorld());
     double d =
@@ -49,8 +56,31 @@ public final class EntityListener implements Listener {
         plugin.getIvorySettings()
             .getDouble("multipliers.environment." + livingEntity.getWorld().getEnvironment().name(),
                        1.0);
+    double enchMult = 1.0;
 
-    d = d * biomeMult * timeMult * worldMult * envMult;
+    List<String> enchStrings =
+        plugin.getIvorySettings()
+            .getStringList("multipliers.enchantments", new ArrayList<String>());
+    for (String s : enchStrings) {
+      if (!s.contains(":")) {
+        continue;
+      }
+      String[] split = s.split(":");
+      if (split.length < 3) {
+        continue;
+      }
+      Enchantment enchantment = Enchantment.getByName(split[0]);
+      if (enchantment == null || !itemStack.containsEnchantment(enchantment)) {
+        continue;
+      }
+      int level = NumberUtils.toInt(split[1]);
+      if (itemStack.getEnchantmentLevel(enchantment) != level) {
+        continue;
+      }
+      enchMult *= NumberUtils.toDouble(split[2]);
+    }
+
+    d = d * biomeMult * timeMult * worldMult * envMult * enchMult;
 
     MobBountyReloadedRewardEvent mbrre = new MobBountyReloadedRewardEvent(player, livingEntity, d);
     Bukkit.getPluginManager().callEvent(mbrre);
@@ -69,17 +99,21 @@ public final class EntityListener implements Listener {
     plugin.getEconomyHandler().transaction(player, d);
     if (d > 0.0) {
       MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
-          .getString("language.messages.reward", "language.messages.reward"),
+                                                  .getString("language.messages.reward",
+                                                             "language.messages.reward"),
                                               new String[][]{{"%amount%",
                                                               plugin.getEconomyHandler().format(d)},
-                                                             {"%mob%", mobName}});
+                                                             {"%mob%", mobName}}
+      );
     } else if (d < 0.0) {
       MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
-          .getString("language.messages.fine", "language.messages.fine"),
+                                                  .getString("language.messages.fine",
+                                                             "language.messages.fine"),
                                               new String[][]{
                                                   {"%amount%", plugin.getEconomyHandler().format(
                                                       Math.abs(d))},
-                                                  {"%mob%", mobName}});
+                                                  {"%mob%", mobName}}
+      );
     }
   }
 
