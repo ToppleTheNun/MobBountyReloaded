@@ -36,16 +36,25 @@ public final class EntityListener implements Listener {
     Player killer = player.getKiller();
     if (killer == null) {
       double bal = plugin.getEconomyHandler().getBalance(player);
-      boolean isPerc = plugin.getIvorySettings().getBoolean("config.on-death-to-monster-loss.percentage", false);
-      double perc = plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
+      boolean
+          isPerc =
+          plugin.getIvorySettings().getBoolean("config.on-death-to-monster-loss.percentage", false);
+      double
+          perc =
+          plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
       double newBal = isPerc ? bal - bal * perc : bal - perc;
       plugin.getEconomyHandler().setBalance(player, newBal);
     } else {
       double bal = plugin.getEconomyHandler().getBalance(player);
-      boolean isPerc = plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
-      double perc = plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
+      boolean
+          isPerc =
+          plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
+      double
+          perc =
+          plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
       plugin.getEconomyHandler().take(player, Math.abs(isPerc ? bal * perc : bal - perc));
-      if (plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
+      if (plugin.getIvorySettings()
+          .getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
         plugin.getEconomyHandler().give(killer, Math.abs(isPerc ? bal * perc : bal - perc));
       }
     }
@@ -85,6 +94,15 @@ public final class EntityListener implements Listener {
     } else {
       weatherMult = plugin.getIvorySettings().getDouble("multipliers.weather.sunny", 1.0);
     }
+    double distanceMult = plugin.getIvorySettings().getDouble(
+        "multipliers.distance-from-world-spawn." + livingEntity.getWorld().getName()
+        + ".per-10", 0.0);
+    if (distanceMult == 0.0) {
+      distanceMult = plugin.getIvorySettings().getDouble(
+          "multipliers.distance-from-world-spawn.default.per-10", 0.0);
+    }
+    distanceMult = 1.0 + distanceMult * (event.getEntity().getLocation()
+                            .distanceSquared(event.getEntity().getWorld().getSpawnLocation()) / 100);
 
     List<String> enchStrings =
         plugin.getIvorySettings()
@@ -108,7 +126,7 @@ public final class EntityListener implements Listener {
       enchMult *= NumberUtils.toDouble(split[2]);
     }
 
-    d = d * biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult;
+    d = d * biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult;
 
     MobBountyReloadedRewardEvent mbrre = new MobBountyReloadedRewardEvent(player, livingEntity, d);
     Bukkit.getPluginManager().callEvent(mbrre);
