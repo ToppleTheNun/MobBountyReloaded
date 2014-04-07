@@ -9,7 +9,7 @@ public final class GroupHandler implements IGroupHandler {
 
   private Permission permissions;
 
-  private GroupHandler(Permission permissions) {
+  public GroupHandler(Permission permissions) {
     this.permissions = permissions;
   }
 
