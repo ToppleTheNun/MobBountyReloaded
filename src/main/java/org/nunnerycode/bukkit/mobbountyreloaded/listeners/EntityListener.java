@@ -104,6 +104,9 @@ public final class EntityListener implements Listener {
     distanceMult = 1.0 + distanceMult * (event.getEntity().getLocation()
                             .distanceSquared(event.getEntity().getWorld().getSpawnLocation()) / 100);
 
+    double groupMult = plugin.getIvorySettings().getDouble("mulipliers.group."
+                                                           + plugin.getGroupHandler().getGroup(player), 1.0);
+
     List<String> enchStrings =
         plugin.getIvorySettings()
             .getStringList("multipliers.enchantments", new ArrayList<String>());
@@ -126,7 +129,7 @@ public final class EntityListener implements Listener {
       enchMult *= NumberUtils.toDouble(split[2]);
     }
 
-    d = d * biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult;
+    d = d * biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult * groupMult;
 
     MobBountyReloadedRewardEvent mbrre = new MobBountyReloadedRewardEvent(player, livingEntity, d);
     Bukkit.getPluginManager().callEvent(mbrre);
