@@ -6,10 +6,10 @@ import org.bukkit.entity.EntityType;
 
 public interface IMobHandler {
 
-  DoubleRange getReward(EntityType entityType, World world);
+    DoubleRange getReward(EntityType entityType, World world);
 
-  void setReward(EntityType entityType, World world, String reward);
+    void setReward(EntityType entityType, World world, String reward);
 
-  void setReward(EntityType entityType, World world, DoubleRange reward);
+    void setReward(EntityType entityType, World world, DoubleRange reward);
 
 }

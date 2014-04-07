@@ -6,30 +6,30 @@ import org.nunnerycode.bukkit.mobbountyreloaded.api.events.MobBountyReloadedCanc
 
 public final class MobBountyReloadedRewardEvent extends MobBountyReloadedCancellableEvent {
 
-  private final Player player;
-  private final LivingEntity entity;
-  private double amount;
+    private final Player player;
+    private final LivingEntity entity;
+    private double amount;
 
-  public MobBountyReloadedRewardEvent(Player player, LivingEntity entity, double amount) {
-    this.player = player;
-    this.entity = entity;
-    this.amount = amount;
-  }
+    public MobBountyReloadedRewardEvent(Player player, LivingEntity entity, double amount) {
+        this.player = player;
+        this.entity = entity;
+        this.amount = amount;
+    }
 
-  public LivingEntity getEntity() {
-    return entity;
-  }
+    public LivingEntity getEntity() {
+        return entity;
+    }
 
-  public Player getPlayer() {
-    return player;
-  }
+    public Player getPlayer() {
+        return player;
+    }
 
-  public double getAmount() {
-    return amount;
-  }
+    public double getAmount() {
+        return amount;
+    }
 
-  public void setAmount(double amount) {
-    this.amount = amount;
-  }
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
 }
