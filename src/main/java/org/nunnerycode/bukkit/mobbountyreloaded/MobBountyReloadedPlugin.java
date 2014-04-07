@@ -1,6 +1,7 @@
 package org.nunnerycode.bukkit.mobbountyreloaded;
 
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfiguration;
 import net.nunnerycode.bukkit.libraries.ivory.settings.IvorySettings;
 import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
@@ -9,10 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.economy.IEconomyHandler;
+import org.nunnerycode.bukkit.mobbountyreloaded.api.groups.IGroupHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.mobs.IMobHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.commands.MobBountyCommands;
 import org.nunnerycode.bukkit.mobbountyreloaded.economy.EconomyHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.exploits.ExploitListener;
+import org.nunnerycode.bukkit.mobbountyreloaded.groups.GroupHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.listeners.EntityListener;
 import org.nunnerycode.bukkit.mobbountyreloaded.mobs.MobHandler;
 
@@ -29,6 +32,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
   private IvorySettings ivorySettings;
   private IMobHandler mobHandler;
   private IEconomyHandler economyHandler;
+  private IGroupHandler groupHandler;
   private EntityListener entityListener;
   private ExploitListener exploitListener;
   private VersionedIvoryYamlConfiguration configYAML;
@@ -101,6 +105,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
       Bukkit.getPluginManager().disablePlugin(this);
       return;
     }
+
     RegisteredServiceProvider<Economy>
         rsp = getServer().getServicesManager().getRegistration(Economy.class);
     if (rsp == null) {
@@ -114,6 +119,20 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
       return;
     }
     economyHandler = new EconomyHandler(rsp.getProvider());
+
+    RegisteredServiceProvider<Permission>
+        rsp2 = getServer().getServicesManager().getRegistration(Permission.class);
+    if (rsp2 == null) {
+      debug(Level.SEVERE, "Could not find Permissions provider, disabling");
+      Bukkit.getPluginManager().disablePlugin(this);
+      return;
+    }
+    if (rsp2.getProvider() == null) {
+      debug(Level.SEVERE, "Could not find Permissions plugin, disabling");
+      Bukkit.getPluginManager().disablePlugin(this);
+      return;
+    }
+    groupHandler  = new GroupHandler(rsp2.getProvider());
 
     entityListener = new EntityListener(this);
     Bukkit.getPluginManager().registerEvents(entityListener, this);
@@ -158,6 +177,10 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
 
   public VersionedIvoryYamlConfiguration getExploitsYAML() {
     return exploitsYAML;
+  }
+
+  public IGroupHandler getGroupHandler() {
+    return groupHandler;
   }
 
 }
