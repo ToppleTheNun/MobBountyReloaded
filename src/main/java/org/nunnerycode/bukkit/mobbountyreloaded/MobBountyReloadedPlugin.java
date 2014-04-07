@@ -121,16 +121,12 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
         RegisteredServiceProvider<Permission>
                 rsp2 = getServer().getServicesManager().getRegistration(Permission.class);
         if (rsp2 == null) {
-            debug(Level.SEVERE, "Could not find Permissions provider, disabling");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
+            debug(Level.SEVERE, "Could not find Permissions provider");
         }
-        if (rsp2.getProvider() == null) {
-            debug(Level.SEVERE, "Could not find Permissions plugin, disabling");
-            Bukkit.getPluginManager().disablePlugin(this);
-            return;
+        if (rsp2 != null && rsp2.getProvider() == null) {
+            debug(Level.SEVERE, "Could not find Permissions plugin");
         }
-        groupHandler = new GroupHandler(rsp2.getProvider());
+        groupHandler = new GroupHandler(rsp2 != null ? rsp2.getProvider() : null);
 
         entityListener = new EntityListener(this);
         Bukkit.getPluginManager().registerEvents(entityListener, this);

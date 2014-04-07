@@ -14,6 +14,9 @@ public final class GroupHandler implements IGroupHandler {
 
     @Override
     public String getGroup(Player player) {
+        if (permissions == null) {
+            return "";
+        }
         return permissions.getPrimaryGroup(player);
     }
 
