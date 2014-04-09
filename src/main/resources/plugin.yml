@@ -5,6 +5,8 @@ name: ${project.build.name}
 depend: [Vault]
 
 permissions:
+  mobbountyreloaded.ignore-messages:
+    default: false
   mobbountyreloaded.earn:
     default: true
   mobbountyreloaded.command.list:
