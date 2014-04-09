@@ -146,6 +146,9 @@ public final class EntityListener implements Listener {
                         livingEntity.getType().name());
 
         plugin.getEconomyHandler().transaction(player, d);
+        if (player.hasPermission("mobbountyreloaded.ignore-messages")) {
+            return;
+        }
         if (d > 0.0) {
             MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
                             .getString("language.messages.reward",
