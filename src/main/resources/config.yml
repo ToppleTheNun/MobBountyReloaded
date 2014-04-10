@@ -1,4 +1,5 @@
-version: "1.0.0"
+version: "1.0.1"
+hook-holoapi: true
 on-death-to-monster-loss:
   percentage: false
   value: 150.0
