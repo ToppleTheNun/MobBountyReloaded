@@ -1,4 +1,4 @@
-version: "1.0.3"
+version: "1.0.4"
 messages:
   reward: '&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!'
   fine: '&4You were fined &F%amount%&4 for killing a &F%mob%&4!'
@@ -8,6 +8,8 @@ messages:
   list-fine: '&F%mob% &4| %value%'
   list-reward-range: '&F%mob% &2| %value1%&F:&2%value2%'
   list-fine-range: '&F%mob% &4| %value1%&F:&2%value2%'
+  holo-reward: '&2Reward: &F%value%'
+  holo-fine: '&4Fine: &F%value%'
 mob-names:
   CREEPER: Creeper
   SKELETON: Skeleton
