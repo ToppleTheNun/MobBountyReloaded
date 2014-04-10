@@ -2,6 +2,7 @@ package org.nunnerycode.bukkit.mobbountyreloaded.listeners;
 
 import net.nunnerycode.bukkit.libraries.ivory.utils.MessageUtils;
 import net.nunnerycode.bukkit.libraries.ivory.utils.RandomRangeUtils;
+import net.nunnerycode.bukkit.libraries.ivory.utils.StringUtils;
 import org.apache.commons.lang.math.DoubleRange;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -157,6 +158,12 @@ public final class EntityListener implements Listener {
                             plugin.getEconomyHandler().format(d)},
                             {"%mob%", mobName}}
             );
+            if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
+                plugin.getHoloAPIWrapper().showMessage(event.getEntity().getEyeLocation(), 3, StringUtils.colorString(StringUtils
+                        .replaceArgs(plugin.getIvorySettings()
+                                .getString("language.messages.holo-reward", "language.messages.holo-reward"), new String[][]{{"%value%", plugin
+                                .getEconomyHandler().format(d)}})));
+            }
         } else if (d < 0.0) {
             MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
                             .getString("language.messages.fine",
@@ -166,6 +173,12 @@ public final class EntityListener implements Listener {
                                     Math.abs(d))},
                             {"%mob%", mobName}}
             );
+            if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
+                plugin.getHoloAPIWrapper().showMessage(event.getEntity().getEyeLocation(), 3, StringUtils.colorString(StringUtils
+                        .replaceArgs(plugin.getIvorySettings()
+                                .getString("language.messages.holo-reward", "language.messages.holo-fine"), new String[][]{{"%value%", plugin
+                                .getEconomyHandler().format(Math.abs(d))}})));
+            }
         }
     }
 
