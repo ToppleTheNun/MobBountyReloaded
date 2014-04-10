@@ -3,6 +3,7 @@ author: ToppleTheNun
 version: ${project.build.version}
 name: ${project.build.name}
 depend: [Vault]
+softdepend: [HoloAPI]
 
 permissions:
   mobbountyreloaded.ignore-messages:
