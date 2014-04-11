@@ -2,12 +2,11 @@ package org.nunnerycode.bukkit.mobbountyreloaded;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+import net.nunnerycode.bukkit.libraries.ivory.IvoryPlugin;
 import net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfiguration;
 import net.nunnerycode.bukkit.libraries.ivory.settings.IvorySettings;
-import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.economy.IEconomyHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.groups.IGroupHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.mobs.IMobHandler;
@@ -25,9 +24,8 @@ import java.util.logging.Level;
 
 import static net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryConfiguration.VersionUpdateType;
 
-public final class MobBountyReloadedPlugin extends JavaPlugin {
+public final class MobBountyReloadedPlugin extends IvoryPlugin {
 
-    private DebugPrinter debugPrinter;
     private IvorySettings ivorySettings;
     private IMobHandler mobHandler;
     private IEconomyHandler economyHandler;
@@ -46,9 +44,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
     }
 
     @Override
-    public void onEnable() {
-        debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
-
+    public void enable() {
         configYAML =
                 new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "config.yml"),
                         getResource("config.yml"),
@@ -130,7 +126,7 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
         }
         groupHandler = new GroupHandler(rsp2 != null ? rsp2.getProvider() : null);
 
-        holoAPIWrapper = new HoloAPIWrapper();
+        holoAPIWrapper = new HoloAPIWrapper(this);
 
         entityListener = new EntityListener(this);
         Bukkit.getPluginManager().registerEvents(entityListener, this);
@@ -143,10 +139,9 @@ public final class MobBountyReloadedPlugin extends JavaPlugin {
         debug(Level.INFO, "v" + getDescription().getVersion() + " enabled");
     }
 
-    public void debug(Level level, String... messages) {
-        if (debugPrinter != null) {
-            debugPrinter.debug(level, messages);
-        }
+    @Override
+    public void disable() {
+        // do nothing
     }
 
     public IvorySettings getIvorySettings() {
