@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -33,8 +34,15 @@ public final class EntityListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player player = event.getEntity();
-        Player killer = player.getKiller();
-        if (killer == null) {
+        if (!(player.getLastDamageCause() instanceof EntityDamageByEntityEvent)) {
+            return;
+        }
+        EntityDamageByEntityEvent eEvent = (EntityDamageByEntityEvent) player.getLastDamageCause();
+        if (!(eEvent.getDamager() instanceof LivingEntity)) {
+            return;
+        }
+        LivingEntity damager = (LivingEntity) eEvent.getDamager();
+        if (!(damager instanceof Player)) {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
                     isPerc =
@@ -43,7 +51,7 @@ public final class EntityListener implements Listener {
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
             double newBal = isPerc ? bal - bal * perc : bal - perc;
-            plugin.getEconomyHandler().take(player, (isPerc) ? bal * perc : perc);
+            plugin.getEconomyHandler().transaction(player, (isPerc) ? bal * perc : perc);
         } else {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
@@ -52,10 +60,10 @@ public final class EntityListener implements Listener {
             double
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
-            plugin.getEconomyHandler().take(player, Math.abs(isPerc ? bal * perc : bal - perc));
+            plugin.getEconomyHandler().transaction(player, isPerc ? bal * perc : bal - perc);
             if (plugin.getIvorySettings()
                     .getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
-                plugin.getEconomyHandler().give(killer, Math.abs(isPerc ? bal * perc : bal - perc));
+                plugin.getEconomyHandler().transaction((Player) damager, Math.abs(isPerc ? bal * perc : bal - perc));
             }
         }
     }
