@@ -52,6 +52,15 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
             double amount = (isPerc) ? (bal / 100D) * -perc : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
+            if (player.hasPermission("mobbountyreloaded.receive-messages")) {
+                MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
+                                .getString("language.messages.lost-money",
+                                        "language.messages.lost-money"),
+                        new String[][]{
+                                {"%amount%", plugin.getEconomyHandler().format(
+                                        Math.abs(amount))}}
+                );
+            }
         } else {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
@@ -61,9 +70,27 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
             double amount = isPerc ? (bal / 100D) * -perc : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
+            if (player.hasPermission("mobbountyreloaded.receive-messages")) {
+                MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
+                                .getString("language.messages.lost-money",
+                                        "language.messages.lost-money"),
+                        new String[][]{
+                                {"%amount%", plugin.getEconomyHandler().format(
+                                        Math.abs(amount))}}
+                );
+            }
             if (plugin.getIvorySettings()
                     .getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
                 plugin.getEconomyHandler().transaction((Player) damager, Math.abs(amount));
+                if (((Player) damager).hasPermission("mobbountyreloaded.receive-messages")) {
+                    MessageUtils.sendColoredArgumentMessage((Player) damager, plugin.getIvorySettings()
+                                    .getString("language.messages.gained-money",
+                                            "language.messages.gained-money"),
+                            new String[][]{
+                                    {"%amount%", plugin.getEconomyHandler().format(
+                                            Math.abs(amount))}, {"%player%", player.getDisplayName()}}
+                    );
+                }
             }
         }
     }
