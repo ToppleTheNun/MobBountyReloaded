@@ -51,7 +51,7 @@ public final class EntityListener implements Listener {
             double
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
-            double amount = (isPerc) ? bal * -perc : -perc;
+            double amount = (isPerc) ? (bal / 100D) * -perc : -perc;
             plugin.debug(Level.INFO, "==================");
             plugin.debug(Level.INFO, "bal: " + bal);
             plugin.debug(Level.INFO, "isPerc: " + isPerc);
@@ -65,7 +65,7 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
             double perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
-            double amount = isPerc ? bal * -perc : -perc;
+            double amount = isPerc ? (bal / 100D) * -perc : -perc;
             plugin.debug(Level.INFO, "==================");
             plugin.debug(Level.INFO, "bal: " + bal);
             plugin.debug(Level.INFO, "isPerc: " + isPerc);
