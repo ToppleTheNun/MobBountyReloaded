@@ -22,7 +22,6 @@ import org.nunnerycode.bukkit.mobbountyreloaded.events.MobBountyReloadedRewardEv
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public final class EntityListener implements Listener {
 
@@ -52,11 +51,6 @@ public final class EntityListener implements Listener {
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
             double amount = (isPerc) ? (bal / 100D) * -perc : -perc;
-            plugin.debug(Level.INFO, "==================");
-            plugin.debug(Level.INFO, "bal: " + bal);
-            plugin.debug(Level.INFO, "isPerc: " + isPerc);
-            plugin.debug(Level.INFO, "perc: " + perc);
-            plugin.debug(Level.INFO, "amount: " + amount);
             plugin.getEconomyHandler().transaction(player, amount);
         } else {
             double bal = plugin.getEconomyHandler().getBalance(player);
@@ -66,11 +60,6 @@ public final class EntityListener implements Listener {
             double perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
             double amount = isPerc ? (bal / 100D) * -perc : -perc;
-            plugin.debug(Level.INFO, "==================");
-            plugin.debug(Level.INFO, "bal: " + bal);
-            plugin.debug(Level.INFO, "isPerc: " + isPerc);
-            plugin.debug(Level.INFO, "perc: " + perc);
-            plugin.debug(Level.INFO, "amount: " + amount);
             plugin.getEconomyHandler().transaction(player, amount);
             if (plugin.getIvorySettings()
                     .getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
