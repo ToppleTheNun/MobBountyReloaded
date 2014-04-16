@@ -22,6 +22,7 @@ import org.nunnerycode.bukkit.mobbountyreloaded.events.MobBountyReloadedRewardEv
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public final class EntityListener implements Listener {
 
@@ -50,7 +51,13 @@ public final class EntityListener implements Listener {
             double
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
-            plugin.getEconomyHandler().transaction(player, (isPerc) ? bal * -perc : -perc);
+            double amount = (isPerc) ? bal * -perc : -perc;
+            plugin.debug(Level.INFO, "==================");
+            plugin.debug(Level.INFO, "bal: " + bal);
+            plugin.debug(Level.INFO, "isPerc: " + isPerc);
+            plugin.debug(Level.INFO, "perc: " + perc);
+            plugin.debug(Level.INFO, "amount: " + amount);
+            plugin.getEconomyHandler().transaction(player, amount);
         } else {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
@@ -58,10 +65,16 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
             double perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
-            plugin.getEconomyHandler().transaction(player, isPerc ? -(bal * perc) : -perc);
+            double amount = isPerc ? bal * -perc : -perc;
+            plugin.debug(Level.INFO, "==================");
+            plugin.debug(Level.INFO, "bal: " + bal);
+            plugin.debug(Level.INFO, "isPerc: " + isPerc);
+            plugin.debug(Level.INFO, "perc: " + perc);
+            plugin.debug(Level.INFO, "amount: " + amount);
+            plugin.getEconomyHandler().transaction(player, amount);
             if (plugin.getIvorySettings()
                     .getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
-                plugin.getEconomyHandler().transaction((Player) damager, Math.abs(isPerc ? bal * perc : bal - perc));
+                plugin.getEconomyHandler().transaction((Player) damager, Math.abs(amount));
             }
         }
     }
@@ -168,7 +181,8 @@ public final class EntityListener implements Listener {
                 plugin.getHoloAPIWrapper().showFuzzyMessage(event.getEntity().getEyeLocation(), 3, 3, StringUtils
                         .colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
                                         .getString("language.messages.holo-reward", "language.messages.holo-reward"),
-                                new String[][]{{"%value%", plugin.getEconomyHandler().format(d)}})));
+                                new String[][]{{"%value%", plugin.getEconomyHandler().format(d)}}
+                        )));
             }
         } else if (d < 0.0) {
             MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
@@ -183,7 +197,9 @@ public final class EntityListener implements Listener {
                 plugin.getHoloAPIWrapper().showFuzzyMessage(event.getEntity().getEyeLocation(), 3, 3,
                         StringUtils.colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
                                         .getString("language.messages.holo-reward", "language.messages.holo-fine"),
-                                new String[][]{{"%value%", plugin.getEconomyHandler().format(Math.abs(d))}})));
+                                new String[][]{{"%value%", plugin.getEconomyHandler().format(Math.abs(d))}}
+                        ))
+                );
             }
         }
     }
