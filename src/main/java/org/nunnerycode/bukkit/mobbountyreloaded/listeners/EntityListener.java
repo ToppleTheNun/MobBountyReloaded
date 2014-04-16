@@ -50,17 +50,15 @@ public final class EntityListener implements Listener {
             double
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
-            double newBal = isPerc ? bal - bal * perc : bal - perc;
-            plugin.getEconomyHandler().transaction(player, (isPerc) ? bal * perc : perc);
+            plugin.getEconomyHandler().transaction(player,  (isPerc) ? bal * -perc : -perc);
         } else {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
                     isPerc =
                     plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
-            double
-                    perc =
+            double perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
-            plugin.getEconomyHandler().transaction(player, isPerc ? bal * perc : bal - perc);
+            plugin.getEconomyHandler().transaction(player, isPerc ? -(bal * perc) : -perc);
             if (plugin.getIvorySettings()
                     .getBoolean("config.on-death-to-player-loss.killer-gains-losses", true)) {
                 plugin.getEconomyHandler().transaction((Player) damager, Math.abs(isPerc ? bal * perc : bal - perc));
