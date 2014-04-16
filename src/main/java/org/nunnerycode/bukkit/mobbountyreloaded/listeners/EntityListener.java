@@ -153,7 +153,7 @@ public final class EntityListener implements Listener {
                         livingEntity.getType().name());
 
         plugin.getEconomyHandler().transaction(player, d);
-        if (player.hasPermission("mobbountyreloaded.ignore-messages")) {
+        if (!player.hasPermission("mobbountyreloaded.receive-messages")) {
             return;
         }
         if (d > 0.0) {
