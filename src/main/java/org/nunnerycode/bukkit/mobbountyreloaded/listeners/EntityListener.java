@@ -50,7 +50,7 @@ public final class EntityListener implements Listener {
             double
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
-            plugin.getEconomyHandler().transaction(player,  (isPerc) ? bal * -perc : -perc);
+            plugin.getEconomyHandler().transaction(player, (isPerc) ? bal * -perc : -perc);
         } else {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
@@ -165,10 +165,10 @@ public final class EntityListener implements Listener {
                             {"%mob%", mobName}}
             );
             if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
-                plugin.getHoloAPIWrapper().showMessage(event.getEntity().getEyeLocation(), 3, StringUtils.colorString(StringUtils
-                        .replaceArgs(plugin.getIvorySettings()
-                                .getString("language.messages.holo-reward", "language.messages.holo-reward"), new String[][]{{"%value%", plugin
-                                .getEconomyHandler().format(d)}})));
+                plugin.getHoloAPIWrapper().showFuzzyMessage(event.getEntity().getEyeLocation(), 3, 3, StringUtils
+                        .colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
+                                        .getString("language.messages.holo-reward", "language.messages.holo-reward"),
+                                new String[][]{{"%value%", plugin.getEconomyHandler().format(d)}})));
             }
         } else if (d < 0.0) {
             MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
@@ -180,10 +180,10 @@ public final class EntityListener implements Listener {
                             {"%mob%", mobName}}
             );
             if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
-                plugin.getHoloAPIWrapper().showMessage(event.getEntity().getEyeLocation(), 3, StringUtils.colorString(StringUtils
-                        .replaceArgs(plugin.getIvorySettings()
-                                .getString("language.messages.holo-reward", "language.messages.holo-fine"), new String[][]{{"%value%", plugin
-                                .getEconomyHandler().format(Math.abs(d))}})));
+                plugin.getHoloAPIWrapper().showFuzzyMessage(event.getEntity().getEyeLocation(), 3, 3,
+                        StringUtils.colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
+                                        .getString("language.messages.holo-reward", "language.messages.holo-fine"),
+                                new String[][]{{"%value%", plugin.getEconomyHandler().format(Math.abs(d))}})));
             }
         }
     }
