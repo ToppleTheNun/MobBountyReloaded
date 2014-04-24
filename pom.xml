@@ -17,6 +17,7 @@
     </prerequisites>
 
     <build>
+    	<defaultGoal>clean package</defaultGoal>
         <finalName>${project.name}</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <resources>
