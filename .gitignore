@@ -3,3 +3,7 @@
 *.iml
 *.eml
 dependency-reduced-pom.xml
+.classpath
+.project
+/bin
+/dist
