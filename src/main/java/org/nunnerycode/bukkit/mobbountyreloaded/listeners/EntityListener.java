@@ -203,6 +203,7 @@ public final class EntityListener implements Listener {
         if (!player.hasPermission("mobbountyreloaded.receive-messages")) {
             return;
         }
+        int holoAPIOffset = plugin.getIvorySettings().getInt("config.holoapi.offset", 3);
         if (d > 0.0) {
             MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
                             .getString("language.messages.reward",
@@ -211,8 +212,8 @@ public final class EntityListener implements Listener {
                             plugin.getEconomyHandler().format(d)},
                             {"%mob%", mobName}}
             );
-            if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
-                HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, 3, 0), 3, StringUtils
+            if (plugin.getIvorySettings().getBoolean("config.holoapi.hook", true)) {
+                HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, holoAPIOffset, 0), 3, StringUtils
                         .colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
                                         .getString("language.messages.holo-reward", "language.messages.holo-reward"),
                                 new String[][]{{"%value%", plugin.getEconomyHandler().format(d)}}
@@ -227,8 +228,8 @@ public final class EntityListener implements Listener {
                                     Math.abs(d))},
                             {"%mob%", mobName}}
             );
-            if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
-                HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, 3, 0), 3,
+            if (plugin.getIvorySettings().getBoolean("config.holoapi.hook", true)) {
+                HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, holoAPIOffset, 0), 3,
                         StringUtils.colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
                                         .getString("language.messages.holo-reward", "language.messages.holo-fine"),
                                 new String[][]{{"%value%", plugin.getEconomyHandler().format(Math.abs(d))}}
