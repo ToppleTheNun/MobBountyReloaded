@@ -1,5 +1,6 @@
 package org.nunnerycode.bukkit.mobbountyreloaded.listeners;
 
+import net.nunnerycode.bukkit.libraries.ivory.utils.HoloUtils;
 import net.nunnerycode.bukkit.libraries.ivory.utils.MessageUtils;
 import net.nunnerycode.bukkit.libraries.ivory.utils.RandomRangeUtils;
 import net.nunnerycode.bukkit.libraries.ivory.utils.StringUtils;
@@ -211,7 +212,7 @@ public final class EntityListener implements Listener {
                             {"%mob%", mobName}}
             );
             if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
-                plugin.getHoloAPIWrapper().showFuzzyMessage(event.getEntity().getEyeLocation(), 3, 3, StringUtils
+                HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, 3, 0), 3, StringUtils
                         .colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
                                         .getString("language.messages.holo-reward", "language.messages.holo-reward"),
                                 new String[][]{{"%value%", plugin.getEconomyHandler().format(d)}}
@@ -227,7 +228,7 @@ public final class EntityListener implements Listener {
                             {"%mob%", mobName}}
             );
             if (plugin.getIvorySettings().getBoolean("config.hook-holoapi", true)) {
-                plugin.getHoloAPIWrapper().showFuzzyMessage(event.getEntity().getEyeLocation(), 3, 3,
+                HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, 3, 0), 3,
                         StringUtils.colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
                                         .getString("language.messages.holo-reward", "language.messages.holo-fine"),
                                 new String[][]{{"%value%", plugin.getEconomyHandler().format(Math.abs(d))}}
