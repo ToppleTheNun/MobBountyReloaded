@@ -16,7 +16,6 @@ import org.nunnerycode.bukkit.mobbountyreloaded.exploits.ExploitListener;
 import org.nunnerycode.bukkit.mobbountyreloaded.groups.GroupHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.listeners.EntityListener;
 import org.nunnerycode.bukkit.mobbountyreloaded.mobs.MobHandler;
-import org.nunnerycode.bukkit.mobbountyreloaded.wrappers.HoloAPIWrapper;
 import se.ranzdo.bukkit.methodcommand.CommandHandler;
 
 import java.io.File;
@@ -37,7 +36,6 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
     private VersionedIvoryYamlConfiguration multipliersYAML;
     private VersionedIvoryYamlConfiguration languageYAML;
     private VersionedIvoryYamlConfiguration exploitsYAML;
-    private HoloAPIWrapper holoAPIWrapper;
 
     public VersionedIvoryYamlConfiguration getConfigYAML() {
         return configYAML;
@@ -126,8 +124,6 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
         }
         groupHandler = new GroupHandler(rsp2 != null ? rsp2.getProvider() : null);
 
-        holoAPIWrapper = new HoloAPIWrapper(this);
-
         entityListener = new EntityListener(this);
         Bukkit.getPluginManager().registerEvents(entityListener, this);
         exploitListener = new ExploitListener(this);
@@ -176,7 +172,4 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
         return groupHandler;
     }
 
-    public HoloAPIWrapper getHoloAPIWrapper() {
-        return holoAPIWrapper;
-    }
 }
