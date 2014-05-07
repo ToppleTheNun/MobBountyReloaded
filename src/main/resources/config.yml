@@ -1,5 +1,7 @@
-version: "1.0.2"
-hook-holoapi: true
+version: "1.0.3"
+holoapi:
+  hook: true
+  offset: 3
 on-death-to-monster-loss:
   percentage: false
   value: 150.0
