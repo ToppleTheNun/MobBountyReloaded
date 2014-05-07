@@ -35,7 +35,24 @@ public final class EntityListener implements Listener {
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
         Player player = event.getEntity();
         if (!(player.getLastDamageCause() instanceof EntityDamageByEntityEvent)) {
-            return;
+            double bal = plugin.getEconomyHandler().getBalance(player);
+            boolean
+                    isPerc =
+                    plugin.getIvorySettings().getBoolean("config.on-other-deaths.percentage", true);
+            double
+                    perc =
+                    plugin.getIvorySettings().getDouble("config.on-other-deaths.value", 50.0);
+            double amount = (isPerc) ? (perc/ -100D) * bal : -perc;
+            plugin.getEconomyHandler().transaction(player, amount);
+            if (player.hasPermission("mobbountyreloaded.receive-messages")) {
+                MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
+                                .getString("language.messages.lost-money",
+                                        "language.messages.lost-money"),
+                        new String[][]{
+                                {"%amount%", plugin.getEconomyHandler().format(
+                                        Math.abs(amount))}}
+                );
+            }
         }
         EntityDamageByEntityEvent eEvent = (EntityDamageByEntityEvent) player.getLastDamageCause();
         if (!(eEvent.getDamager() instanceof LivingEntity)) {
@@ -50,7 +67,7 @@ public final class EntityListener implements Listener {
             double
                     perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
-            double amount = (isPerc) ? (bal / 100D) * -perc : -perc;
+            double amount = (isPerc) ? (perc/ -100D) * bal : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
             if (player.hasPermission("mobbountyreloaded.receive-messages")) {
                 MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
@@ -68,7 +85,7 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getBoolean("config.on-death-to-player-loss.percentage", false);
             double perc =
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
-            double amount = isPerc ? (bal / 100D) * -perc : -perc;
+            double amount = (isPerc) ? (perc/ -100D) * bal : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
             if (player.hasPermission("mobbountyreloaded.receive-messages")) {
                 MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
