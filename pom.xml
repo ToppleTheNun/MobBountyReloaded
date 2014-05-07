@@ -128,13 +128,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.nunnerycode.java.libraries</groupId>
-            <artifactId>Cannonball</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>se.ranzdo.bukkit</groupId>
             <artifactId>methodcommand</artifactId>
             <version>0.2-SNAPSHOT</version>
