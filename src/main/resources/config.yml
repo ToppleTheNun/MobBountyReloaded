@@ -1,4 +1,4 @@
-version: "1.0.1"
+version: "1.0.2"
 hook-holoapi: true
 on-death-to-monster-loss:
   percentage: false
@@ -7,3 +7,6 @@ on-death-to-player-loss:
   percentage: true
   value: 50.0
   killer-gains-losses: true
+on-other-deaths:
+  percentage: true
+  value: 50.0
