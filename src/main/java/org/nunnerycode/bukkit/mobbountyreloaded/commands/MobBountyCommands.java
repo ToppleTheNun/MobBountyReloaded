@@ -23,7 +23,7 @@ public class MobBountyCommands {
         this.plugin = plugin;
     }
 
-    @Command(identifier = "mobbountyreloaded reward", permissions = "mobboutnyreloaded.command.reward")
+    @Command(identifier = "mobbountyreloaded reward", permissions = "mobbountyreloaded.command.reward")
     public void rewardSubcommand(CommandSender sender, @Arg(name = "mob", def = "ZOMBIE") String mobName,
                                  @Arg(name = "reward", def = "0.0") String reward) {
         EntityType entityType;
