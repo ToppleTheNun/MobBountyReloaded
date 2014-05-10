@@ -1,4 +1,4 @@
-version: "1.0.6"
+version: "1.0.7"
 messages:
   reward: '&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!'
   fine: '&4You were fined &F%amount%&4 for killing a &F%mob%&4!'
@@ -14,7 +14,10 @@ messages:
   gained-money: '&2You gained &F%amount%&2 for killing &F%player%&2.'
   reward-help: '&AAllowed mobs: &7%mobs%'
   reward-success: '&2The default value of &F%mob%&2 has been changed to &F%value%&2.'
-  reward-failure: '&4You were unable to change the default value for that mob.'
+  reward-failure: '&CYou were unable to change the default value for that mob.'
+  world-reward-help: '&AAllowed worlds: &7%worlds%'
+  world-reward-success: '&2The value of &F%mob%&2 in &F%world%&2 has been changed to &F%value%&2.'
+  world-reward-failure: '&CYou were unable to modify the mob value in that world.'
   load: '&2MobBountyReloaded configuration files have been reloaded.'
   save: '&2MobBountyReloaded configuration files have been saved.'
 mob-names:
