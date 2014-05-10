@@ -68,21 +68,10 @@ public class MobBountyCommands {
     @Command(identifier = "mobbountyreloaded list", permissions = "mobbountyreloaded.command.list")
     public void listSubcommand(CommandSender sender,
                                @Arg(name = "world", def = "") String worldName) {
-        if (worldName.equals("")) {
-            if (!(sender instanceof Player)) {
-                MessageUtils.sendColoredMessage(sender, plugin.getIvorySettings()
-                        .getString("language.messages.no-access", "language.messages.no-access"));
-                return;
-            }
+        if (worldName.equals("") && sender instanceof Player) {
             worldName = ((Player) sender).getWorld().getName();
         }
         World world = Bukkit.getWorld(worldName);
-        if (world == null) {
-            MessageUtils.sendColoredMessage(sender, plugin.getIvorySettings()
-                    .getString("language.messages.world-does-not-exist",
-                            "language.messages.world-does-not-exist"));
-            return;
-        }
         for (EntityType entityType : EntityType.values()) {
             DoubleRange doubleRange = plugin.getMobHandler().getReward(entityType, world);
             if (doubleRange.getMaximumDouble() < 0.0) {
