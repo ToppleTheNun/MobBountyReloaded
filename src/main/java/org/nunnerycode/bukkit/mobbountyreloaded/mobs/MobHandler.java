@@ -42,7 +42,11 @@ public final class MobHandler implements IMobHandler {
 
     @Override
     public void setReward(EntityType entityType, World world, String reward) {
-        plugin.getIvorySettings().set("rewards." + world.getName() + "." + entityType.name(), reward);
+        if (world == null) {
+            plugin.getIvorySettings().set("rewards.default." + entityType.name(), reward);
+        } else {
+            plugin.getIvorySettings().set("rewards." + world.getName() + "." + entityType.name(), reward);
+        }
     }
 
     @Override
