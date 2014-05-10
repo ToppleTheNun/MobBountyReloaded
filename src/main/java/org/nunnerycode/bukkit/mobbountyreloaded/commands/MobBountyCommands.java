@@ -23,6 +23,18 @@ public class MobBountyCommands {
         this.plugin = plugin;
     }
 
+    @Command(identifier = "mobbountyreloaded load", permissions = "mobbountyreloaded.command.load")
+    public void loadSubcommand(CommandSender sender) {
+        plugin.reload();
+        MessageUtils.sendColoredMessage(sender, plugin.getIvorySettings().getString("messages.load", "messages.load"));
+    }
+
+    @Command(identifier = "mobbountyreloaded save", permissions = "mobbountyreloaded.command.save")
+    public void saveSubcommand(CommandSender sender) {
+        plugin.save();
+        MessageUtils.sendColoredMessage(sender, plugin.getIvorySettings().getString("messages.save", "messages.save"));
+    }
+
     @Command(identifier = "mobbountyreloaded reward", permissions = "mobbountyreloaded.command.reward")
     public void rewardSubcommand(CommandSender sender, @Arg(name = "mob", def = "ZOMBIE") String mobName,
                                  @Arg(name = "reward", def = "0.0") String reward) {
