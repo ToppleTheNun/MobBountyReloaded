@@ -19,6 +19,7 @@ import org.nunnerycode.bukkit.mobbountyreloaded.mobs.MobHandler;
 import se.ranzdo.bukkit.methodcommand.CommandHandler;
 
 import java.io.File;
+import java.util.Map;
 import java.util.logging.Level;
 
 import static net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryConfiguration.VersionUpdateType;
@@ -135,6 +136,34 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
         debug(Level.INFO, "v" + getDescription().getVersion() + " enabled");
     }
 
+    @Override
+    public void disable() {
+        // do nothing
+    }
+
+    public void save() {
+        for (Map.Entry<String, Object> entry : ivorySettings.getSettingMap().entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (key.startsWith("config")) {
+                configYAML.set(key.replace("config.", ""), value);
+            } else if (key.startsWith("rewards.")) {
+                rewardsYAML.set(key.replace("rewards.", ""), value);
+            } else if (key.startsWith("multipliers.")) {
+                multipliersYAML.set(key.replace("multipliers.", ""), value);
+            } else if (key.startsWith("language.")) {
+                languageYAML.set(key.replace("language.", ""), value);
+            } else if (key.startsWith("exploits.")) {
+                exploitsYAML.set(key.replace("exploits.", ""), value);
+            }
+        }
+        configYAML.save();
+        rewardsYAML.save();
+        multipliersYAML.save();
+        languageYAML.save();
+        exploitsYAML.save();
+    }
+
     public void reload() {
         configYAML =
                 new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "config.yml"),
@@ -184,11 +213,6 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
         ivorySettings =
                 IvorySettings
                         .loadFromFiles(configYAML, rewardsYAML, multipliersYAML, languageYAML, exploitsYAML);
-    }
-
-    @Override
-    public void disable() {
-        // do nothing
     }
 
     public IvorySettings getIvorySettings() {
