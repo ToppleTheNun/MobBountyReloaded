@@ -13,8 +13,8 @@ messages:
   lost-money: '&4You lost &F%amount%&4 for dying.'
   gained-money: '&2You gained &F%amount%&2 for killing &F%player%&2.'
   reward-help: '&AAllowed mobs: &7%mobs%'
-  reward-success: '&F%mob%&2's default value has been changed to &F%value%&2.'
-  reward-failure: '&4You were unable to change that mob's default value.'
+  reward-success: '&2The default value of &F%mob%&2 has been changed to &F%value%&2.'
+  reward-failure: '&4You were unable to change the default value for that mob.'
   load: '&2MobBountyReloaded configuration files have been reloaded.'
   save: '&2MobBountyReloaded configuration files have been saved.'
 mob-names:
