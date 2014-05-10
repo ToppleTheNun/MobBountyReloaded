@@ -22,11 +22,14 @@ public final class MobHandler implements IMobHandler {
 
     @Override
     public DoubleRange getReward(EntityType entityType, World world) {
-        String s = plugin.getIvorySettings()
-                .getString("rewards." + world.getName() + "." + entityType.name(), "0:0");
-        if (s.equals("0:0")) {
-            s = plugin.getIvorySettings()
-                    .getString("rewards.default." + entityType.name(), "0:0");
+        String s;
+        if (world == null) {
+            s = plugin.getIvorySettings().getString("rewards.default." + entityType.name(), "0:0");
+        } else {
+            s = plugin.getIvorySettings().getString("rewards." + world.getName() + "." + entityType.name(), "0:0");
+            if (s.equals("0:0")) {
+                s = plugin.getIvorySettings().getString("rewards.default." + entityType.name(), "0:0");
+            }
         }
         String[] array = s.split(":");
         DoubleRange dr;
