@@ -15,6 +15,8 @@ messages:
   reward-help: '&AAllowed mobs: &7%mobs%'
   reward-success: '&F%mob%&2's default value has been changed to &F%value%&2.'
   reward-failure: '&4You were unable to change that mob's default value.'
+  load: '&2MobBountyReloaded configuration files have been reloaded.'
+  save: '&2MobBountyReloaded configuration files have been saved.'
 mob-names:
   CREEPER: Creeper
   SKELETON: Skeleton
