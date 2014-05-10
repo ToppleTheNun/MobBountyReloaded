@@ -135,6 +135,57 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
         debug(Level.INFO, "v" + getDescription().getVersion() + " enabled");
     }
 
+    public void reload() {
+        configYAML =
+                new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "config.yml"),
+                        getResource("config.yml"),
+                        VersionUpdateType.BACKUP_AND_UPDATE);
+        if (configYAML.update()) {
+            getLogger().info("Updating config.yml");
+            debug(Level.INFO, "Updating config.yml");
+        }
+
+        rewardsYAML =
+                new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "rewards.yml"),
+                        getResource("rewards.yml"),
+                        VersionUpdateType.BACKUP_AND_UPDATE);
+        if (rewardsYAML.update()) {
+            getLogger().info("Updating rewards.yml");
+            debug(Level.INFO, "Updating rewards.yml");
+        }
+
+        multipliersYAML =
+                new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "multipliers.yml"),
+                        getResource("multipliers.yml"),
+                        VersionUpdateType.BACKUP_AND_UPDATE);
+        if (multipliersYAML.update()) {
+            getLogger().info("Updating multipliers.yml");
+            debug(Level.INFO, "Updating multipliers.yml");
+        }
+
+        languageYAML =
+                new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "language.yml"),
+                        getResource("language.yml"),
+                        VersionUpdateType.BACKUP_AND_UPDATE);
+        if (languageYAML.update()) {
+            getLogger().info("Updating language.yml");
+            debug(Level.INFO, "Updating language.yml");
+        }
+
+        exploitsYAML =
+                new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "exploits.yml"),
+                        getResource("exploits.yml"),
+                        VersionUpdateType.BACKUP_AND_UPDATE);
+        if (exploitsYAML.update()) {
+            getLogger().info("Updating exploits.yml");
+            debug(Level.INFO, "Updating exploits.yml");
+        }
+
+        ivorySettings =
+                IvorySettings
+                        .loadFromFiles(configYAML, rewardsYAML, multipliersYAML, languageYAML, exploitsYAML);
+    }
+
     @Override
     public void disable() {
         // do nothing
