@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
+import org.nunnerycode.bukkit.mobbountyreloaded.utils.MobUtils;
 import se.ranzdo.bukkit.methodcommand.Arg;
 import se.ranzdo.bukkit.methodcommand.Command;
 
@@ -20,6 +21,36 @@ public class MobBountyCommands {
 
     public MobBountyCommands(MobBountyReloadedPlugin plugin) {
         this.plugin = plugin;
+    }
+
+    @Command(identifier = "mobbountyreloaded reward", permissions = "mobboutnyreloaded.command.reward")
+    public void rewardSubcommand(CommandSender sender, @Arg(name = "mob", def = "ZOMBIE") String mobName,
+                                 @Arg(name = "reward", def = "0.0") String reward) {
+        EntityType entityType;
+        try {
+            entityType = EntityType.valueOf(mobName);
+        } catch (Exception e) {
+            MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings().getString("language.messages." +
+                                                                                                "reward-help",
+                    "language.messages.reward-help"), new String[][]{{"%mobs%", MobUtils.getMobsOnServer().toString()}});
+            MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings().getString("language.messages." +
+                                                                                                "reward-failure",
+                    "language.messages.reward-failure"), new String[][]{{"%mob%", mobName}, {"%value%", reward}});
+            return;
+        }
+        if (entityType == null) {
+            MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings().getString("language.messages." +
+                                                                                                "reward-help",
+                    "language.messages.reward-help"), new String[][]{{"%mobs%", MobUtils.getMobsOnServer().toString()}});
+            MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings().getString("language.messages." +
+                                                                                                "reward-failure",
+                    "language.messages.reward-failure"), new String[][]{{"%mob%", mobName}, {"%value%", reward}});
+            return;
+        }
+        plugin.getMobHandler().setReward(entityType, null, reward);
+        MessageUtils.sendColoredArgumentMessage(sender, plugin.getIvorySettings().getString("language.messages" +
+                                                                                            ".reward-success",
+                "language.messages.reward-success"), new String[][]{{"%mob%", mobName}, {"%value%", reward}});
     }
 
     @Command(identifier = "mobbountyreloaded list", permissions = "mobbountyreloaded.command.list")
