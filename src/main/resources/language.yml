@@ -1,4 +1,4 @@
-version: "1.0.5"
+version: "1.0.6"
 messages:
   reward: '&2You were rewarded &F%amount%&2 for killing a &F%mob%&2!'
   fine: '&4You were fined &F%amount%&4 for killing a &F%mob%&4!'
@@ -12,6 +12,9 @@ messages:
   holo-fine: '&4Fine: &F%value%'
   lost-money: '&4You lost &F%amount%&4 for dying.'
   gained-money: '&2You gained &F%amount%&2 for killing &F%player%&2.'
+  reward-help: '&AAllowed mobs: &7%mobs%'
+  reward-success: '&F%mob%&2's default value has been changed to &F%value%&2.'
+  reward-failure: '&4You were unable to change that mob's default value.'
 mob-names:
   CREEPER: Creeper
   SKELETON: Skeleton
