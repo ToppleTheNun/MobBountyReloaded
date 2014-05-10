@@ -183,7 +183,10 @@ public final class EntityListener implements Listener {
             enchMult *= NumberUtils.toDouble(split[2]);
         }
 
-        d = d * biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult * groupMult;
+        double totalMult = biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult *
+                           groupMult;
+
+        d *= totalMult;
 
         MobBountyReloadedRewardEvent mbrre = new MobBountyReloadedRewardEvent(player, livingEntity, d);
         Bukkit.getPluginManager().callEvent(mbrre);
