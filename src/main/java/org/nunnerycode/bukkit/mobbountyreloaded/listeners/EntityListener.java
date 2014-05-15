@@ -54,6 +54,7 @@ public final class EntityListener implements Listener {
                                         Math.abs(amount))}}
                 );
             }
+            return;
         }
         EntityDamageByEntityEvent eEvent = (EntityDamageByEntityEvent) player.getLastDamageCause();
         if (!(eEvent.getDamager() instanceof LivingEntity)) {
