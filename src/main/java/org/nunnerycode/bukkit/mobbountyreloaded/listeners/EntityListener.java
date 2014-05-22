@@ -116,6 +116,9 @@ public final class EntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDeathEvent(EntityDeathEvent event) {
+        if (event instanceof PlayerDeathEvent) {
+            return;
+        }
         LivingEntity livingEntity = event.getEntity();
         Player player = livingEntity.getKiller();
         if (player == null || !player.hasPermission("mobbountyreloaded.earn")) {
