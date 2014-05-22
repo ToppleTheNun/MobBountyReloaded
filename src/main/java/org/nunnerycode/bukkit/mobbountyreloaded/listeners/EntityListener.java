@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -122,6 +123,11 @@ public final class EntityListener implements Listener {
         LivingEntity livingEntity = event.getEntity();
         Player player = livingEntity.getKiller();
         if (player == null || !player.hasPermission("mobbountyreloaded.earn")) {
+            return;
+        }
+        BlockBreakEvent bbe = new BlockBreakEvent(player.getLocation().getBlock(), player);
+        Bukkit.getPluginManager().callEvent(bbe);
+        if (bbe.isCancelled()) {
             return;
         }
         ItemStack itemStack = player.getItemInHand();
