@@ -7,6 +7,8 @@ import net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfigura
 import net.nunnerycode.bukkit.libraries.ivory.settings.IvorySettings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.nunnerycode.bukkit.libraries.guardian.AbstractGuardian;
+import org.nunnerycode.bukkit.libraries.guardian.GuardianHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.economy.IEconomyHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.groups.IGroupHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.mobs.IMobHandler;
@@ -37,6 +39,11 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
     private VersionedIvoryYamlConfiguration multipliersYAML;
     private VersionedIvoryYamlConfiguration languageYAML;
     private VersionedIvoryYamlConfiguration exploitsYAML;
+    private GuardianHandler guardianHandler;
+
+    public GuardianHandler getGuardianHandler() {
+        return guardianHandler;
+    }
 
     public VersionedIvoryYamlConfiguration getConfigYAML() {
         return configYAML;
@@ -132,6 +139,18 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
 
         CommandHandler commandHandler = new CommandHandler(this);
         commandHandler.registerCommands(new MobBountyCommands(this));
+
+        guardianHandler = new GuardianHandler();
+        Bukkit.getScheduler().runTaskLater(this, new Runnable() {
+            @Override
+            public void run() {
+                guardianHandler.loadDefaultGuardians();
+                for (AbstractGuardian guardian : guardianHandler.getGuardians()) {
+                    debug(Level.INFO, "Hooked " + guardian.getName());
+                    getLogger().info("Hooked " + guardian.getName());
+                }
+            }
+        }, 20L * 3);
 
         debug(Level.INFO, "v" + getDescription().getVersion() + " enabled");
     }
