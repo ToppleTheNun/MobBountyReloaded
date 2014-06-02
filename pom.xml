@@ -71,23 +71,25 @@
                                     <include>org.apache.commons:commons-lang3</include>
                                     <include>net.nunnerycode.java.libraries:Cannonball</include>
                                     <include>net.nunnerycode.bukkit:ivory-lib</include>
+                                    <include>org.nunnerycode.bukkit:guardian</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
                                     <pattern>net.nunnerycode.bukkit.libraries</pattern>
-                                    <shadedPattern>org.nunnerycode.bukkit.mobbountyreloaded.libraries
-                                    </shadedPattern>
+                                    <shadedPattern>org.nunnerycode.bukkit.mobbountyreloaded.libraries</shadedPattern>
                                     <excludes>
                                         <exclude>net.nunnerycode.bukkit.libraries.module.*</exclude>
-                                        <exclude>net.nunnerycode.bukkit.libraries.splatter.*
-                                        </exclude>
+                                        <exclude>net.nunnerycode.bukkit.libraries.splatter.*</exclude>
                                     </excludes>
                                 </relocation>
                                 <relocation>
+                                    <pattern>org.nunnerycode.bukkit.libraries</pattern>
+                                    <shadedPattern>org.nunnerycode.bukkit.mobbountyreloaded.libraries</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>se.ranzdo.bukkit.methodcommand</pattern>
-                                    <shadedPattern>se.ranzdo.bukkit.mobbountyreloaded.methodcommand
-                                    </shadedPattern>
+                                    <shadedPattern>se.ranzdo.bukkit.mobbountyreloaded.methodcommand</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -137,6 +139,13 @@
         <dependency>
             <groupId>net.nunnerycode.bukkit</groupId>
             <artifactId>ivory-lib</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.nunnerycode.bukkit</groupId>
+            <artifactId>guardian</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
