@@ -125,7 +125,8 @@ public final class EntityListener implements Listener {
         if (player == null || !player.hasPermission("mobbountyreloaded.earn")) {
             return;
         }
-        if (!plugin.getGuardianHandler().canBuild(player, livingEntity.getLocation())) {
+        if (!plugin.getIvorySettings().getBoolean("config.external.allow-earning-if-cannot-build", false)
+            && !plugin.getGuardianHandler().canBuild(player, livingEntity.getLocation())) {
             return;
         }
         ItemStack itemStack = player.getItemInHand();
