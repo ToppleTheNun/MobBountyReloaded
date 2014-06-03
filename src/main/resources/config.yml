@@ -1,7 +1,10 @@
-version: "1.0.3"
+version: "1.0.4"
 holoapi:
   hook: true
   offset: 3
+  show-chat-messages: false
+external:
+  allow-earning-if-cannot-build: false
 on-death-to-monster-loss:
   percentage: false
   value: 150.0
