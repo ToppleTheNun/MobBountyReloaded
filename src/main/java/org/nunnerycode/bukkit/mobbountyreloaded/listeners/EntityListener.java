@@ -212,7 +212,8 @@ public final class EntityListener implements Listener {
                         livingEntity.getType().name());
 
         plugin.getEconomyHandler().transaction(player, d);
-        if (!player.hasPermission("mobbountyreloaded.receive-messages")) {
+        if (!player.hasPermission("mobbountyreloaded.receive-messages") || !plugin.getIvorySettings().getBoolean
+                ("config.holoapi.show-chat-messages", true)) {
             return;
         }
         int holoAPIOffset = plugin.getIvorySettings().getInt("config.holoapi.offset", 3);
