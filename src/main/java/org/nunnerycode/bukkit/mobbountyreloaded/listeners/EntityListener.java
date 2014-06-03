@@ -7,6 +7,7 @@ import net.nunnerycode.bukkit.libraries.ivory.utils.StringUtils;
 import org.apache.commons.lang.math.DoubleRange;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.WeatherType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -149,7 +150,7 @@ public final class EntityListener implements Listener {
                                 1.0);
         double enchMult = 1.0;
         double weatherMult;
-        if (player.getWorld().isThundering()) {
+        if (player.getPlayerWeather() == WeatherType.DOWNFALL) {
             weatherMult = plugin.getIvorySettings().getDouble("multipliers.weather.stormy", 1.0);
         } else {
             weatherMult = plugin.getIvorySettings().getDouble("multipliers.weather.sunny", 1.0);
