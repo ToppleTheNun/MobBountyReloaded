@@ -4,7 +4,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import net.nunnerycode.bukkit.libraries.ivory.IvoryPlugin;
 import net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfiguration;
-import net.nunnerycode.bukkit.libraries.ivory.settings.IvorySettings;
+import net.nunnerycode.bukkit.libraries.ivory.config.settings.IvorySettings;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.nunnerycode.bukkit.libraries.guardian.AbstractGuardian;
