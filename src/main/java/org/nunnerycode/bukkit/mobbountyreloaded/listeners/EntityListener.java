@@ -23,19 +23,35 @@ import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
 import org.nunnerycode.bukkit.mobbountyreloaded.events.MobBountyReloadedRewardEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public final class EntityListener implements Listener {
 
     private MobBountyReloadedPlugin plugin;
+    private Set<UUID> dead;
 
     public EntityListener(MobBountyReloadedPlugin plugin) {
         this.plugin = plugin;
+        dead = new HashSet<>();
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        Player player = event.getEntity();
+        final Player player = event.getEntity();
+        if (dead.contains(player.getUniqueId())) {
+            dead.remove(player.getUniqueId());
+            return;
+        }
+        dead.add(player.getUniqueId());
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                dead.remove(player.getUniqueId());
+            }
+        }, 20L * 30);
         if (!(player.getLastDamageCause() instanceof EntityDamageByEntityEvent)) {
             double bal = plugin.getEconomyHandler().getBalance(player);
             boolean
