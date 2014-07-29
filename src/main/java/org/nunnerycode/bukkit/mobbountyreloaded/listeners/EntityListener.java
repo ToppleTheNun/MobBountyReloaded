@@ -46,7 +46,7 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getDouble("config.on-other-deaths.value", 50.0);
             double amount = (isPerc) ? (perc/ -100D) * bal : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
-            if (player.hasPermission("mobbountyreloaded.receive-messages")) {
+            if (player.hasPermission("mobbountyreloaded.receive-messages") && Math.round(amount) != 0) {
                 MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
                                 .getString("language.messages.lost-money",
                                         "language.messages.lost-money"),
@@ -72,7 +72,7 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getDouble("config.on-death-to-monster-loss.value", 150.0);
             double amount = (isPerc) ? (perc/ -100D) * bal : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
-            if (player.hasPermission("mobbountyreloaded.receive-messages")) {
+            if (player.hasPermission("mobbountyreloaded.receive-messages") && Math.round(amount) != 0) {
                 MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
                                 .getString("language.messages.lost-money",
                                         "language.messages.lost-money"),
@@ -90,7 +90,7 @@ public final class EntityListener implements Listener {
                     plugin.getIvorySettings().getDouble("config.on-death-to-player-loss.value", 150.0);
             double amount = (isPerc) ? (perc/ -100D) * bal : -perc;
             plugin.getEconomyHandler().transaction(player, amount);
-            if (player.hasPermission("mobbountyreloaded.receive-messages")) {
+            if (player.hasPermission("mobbountyreloaded.receive-messages")  && Math.round(amount) != 0) {
                 MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
                                 .getString("language.messages.lost-money",
                                         "language.messages.lost-money"),
