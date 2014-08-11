@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public final class EntityListener implements Listener {
 
@@ -180,8 +181,8 @@ public final class EntityListener implements Listener {
             distanceMult = plugin.getIvorySettings().getDouble(
                     "multipliers.distance-from-world-spawn.default.per-10", 0.0);
         }
-        distanceMult *= (event.getEntity().getLocation()
-                .distanceSquared(event.getEntity().getWorld().getSpawnLocation()) / 100);
+        distanceMult *= 1.0 + (event.getEntity().getLocation()
+                .distanceSquared(event.getEntity().getWorld().getSpawnLocation()) / Math.pow(10, 2));
 
         double groupMult = plugin.getIvorySettings().getDouble("mulipliers.group."
                 + plugin.getGroupHandler().getGroup(player), 1.0);
@@ -210,6 +211,8 @@ public final class EntityListener implements Listener {
 
         double totalMult = biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult *
                            groupMult;
+
+        plugin.debug(Level.INFO, "totalMult = " + totalMult);
 
         d *= totalMult;
 
