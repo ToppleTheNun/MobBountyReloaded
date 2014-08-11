@@ -180,7 +180,7 @@ public final class EntityListener implements Listener {
             distanceMult = plugin.getIvorySettings().getDouble(
                     "multipliers.distance-from-world-spawn.default.per-10", 0.0);
         }
-        distanceMult = 1.0 + distanceMult * (event.getEntity().getLocation()
+        distanceMult *= (event.getEntity().getLocation()
                 .distanceSquared(event.getEntity().getWorld().getSpawnLocation()) / 100);
 
         double groupMult = plugin.getIvorySettings().getDouble("mulipliers.group."
