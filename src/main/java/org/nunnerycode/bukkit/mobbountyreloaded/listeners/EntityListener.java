@@ -173,17 +173,6 @@ public final class EntityListener implements Listener {
         } else {
             weatherMult = plugin.getIvorySettings().getDouble("multipliers.weather.sunny", 1.0);
         }
-        double distanceMult = plugin.getIvorySettings().getDouble(
-                "multipliers.distance-from-world-spawn." + livingEntity.getWorld().getName()
-                        + ".per-10", 0.0
-        );
-        if (distanceMult == 0.0) {
-            distanceMult = plugin.getIvorySettings().getDouble(
-                    "multipliers.distance-from-world-spawn.default.per-10", 0.0);
-        }
-        distanceMult *= 1.0 + (event.getEntity().getLocation()
-                .distanceSquared(event.getEntity().getWorld().getSpawnLocation()) / Math.pow(10, 2));
-
         double groupMult = plugin.getIvorySettings().getDouble("mulipliers.group."
                 + plugin.getGroupHandler().getGroup(player), 1.0);
 
@@ -209,8 +198,7 @@ public final class EntityListener implements Listener {
             enchMult *= NumberUtils.toDouble(split[2]);
         }
 
-        double totalMult = biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * distanceMult *
-                           groupMult;
+        double totalMult = biomeMult * timeMult * worldMult * envMult * enchMult * weatherMult * groupMult;
 
         plugin.debug(Level.INFO, "totalMult = " + totalMult);
 
