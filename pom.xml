@@ -178,17 +178,15 @@
 
     <profiles>
         <profile>
-            <id>jenkins</id>
+            <id>drone</id>
             <activation>
                 <property>
-                    <name>env.BUILD_NUMBER</name>
+                    <name>env.DRONE_BUILD_NUMBER</name>
                 </property>
             </activation>
             <properties>
-                <project.build.number>${env.BUILD_NUMBER}</project.build.number>
-                <project.build.version>
-                    ${project.version}-b${project.build.number}-jenkins
-                </project.build.version>
+                <project.build.number>${env.DRONE_BUILD_NUMBER}</project.build.number>
+                <project.build.version>${project.version}-b${project.build.number}-drone</project.build.version>
                 <project.build.name>${project.name}</project.build.name>
             </properties>
         </profile>
