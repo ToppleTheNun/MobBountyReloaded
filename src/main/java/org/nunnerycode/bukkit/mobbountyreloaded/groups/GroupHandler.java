@@ -17,6 +17,9 @@ public final class GroupHandler implements IGroupHandler {
         if (permissions == null) {
             return "";
         }
+        if (!permissions.hasGroupSupport()) {
+            return "";
+        }
         return permissions.getPrimaryGroup(player);
     }
 
