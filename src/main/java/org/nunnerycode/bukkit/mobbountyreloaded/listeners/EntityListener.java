@@ -1,9 +1,5 @@
 package org.nunnerycode.bukkit.mobbountyreloaded.listeners;
 
-import net.nunnerycode.bukkit.libraries.ivory.utils.HoloUtils;
-import net.nunnerycode.bukkit.libraries.ivory.utils.MessageUtils;
-import net.nunnerycode.bukkit.libraries.ivory.utils.RandomRangeUtils;
-import net.nunnerycode.bukkit.libraries.ivory.utils.StringUtils;
 import org.apache.commons.lang.math.DoubleRange;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
@@ -21,6 +17,10 @@ import org.bukkit.inventory.ItemStack;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.TimeOfDay;
 import org.nunnerycode.bukkit.mobbountyreloaded.events.MobBountyReloadedRewardEvent;
+import org.nunnerycode.bukkit.mobbountyreloaded.utils.HoloUtils;
+import org.nunnerycode.bukkit.mobbountyreloaded.utils.MessageUtils;
+import org.nunnerycode.bukkit.mobbountyreloaded.utils.RandomRangeUtils;
+import org.nunnerycode.bukkit.mobbountyreloaded.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -65,12 +65,12 @@ public final class EntityListener implements Listener {
             plugin.getEconomyHandler().transaction(player, amount);
             if (player.hasPermission("mobbountyreloaded.receive-messages") && Math.round(amount) != 0) {
                 MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()
-                                .getString("language.messages.lost-money",
-                                        "language.messages.lost-money"),
-                        new String[][]{
-                                {"%amount%", plugin.getEconomyHandler().format(
-                                        Math.abs(amount))}}
-                );
+                                                                      .getString("language.messages.lost-money",
+                                                                                 "language.messages.lost-money"),
+                                                        new String[][]{
+                                                                {"%amount%", plugin.getEconomyHandler().format(
+                                                                        Math.abs(amount))}}
+                                                       );
             }
             return;
         }
@@ -151,7 +151,7 @@ public final class EntityListener implements Listener {
                 plugin.getMobHandler().getReward(livingEntity.getType(), livingEntity.getWorld());
         double d =
                 RandomRangeUtils.randomRangeDoubleInclusive(rewardRange.getMinimumDouble(),
-                        rewardRange.getMaximumDouble());
+                                                            rewardRange.getMaximumDouble());
 
         double biomeMult =
                 plugin.getIvorySettings().getDouble(
@@ -235,9 +235,11 @@ public final class EntityListener implements Listener {
             if (plugin.getIvorySettings().getBoolean("config.holoapi.hook", true)) {
                 HoloUtils.showHologram(event.getEntity().getEyeLocation().add(0, holoAPIOffset, 0), 3, StringUtils
                         .colorString(StringUtils.replaceArgs(plugin.getIvorySettings()
-                                        .getString("language.messages.holo-reward", "language.messages.holo-reward"),
-                                new String[][]{{"%value%", plugin.getEconomyHandler().format(d)}}
-                        )));
+                                                                   .getString("language.messages.holo-reward",
+                                                                              "language.messages.holo-reward"),
+                                                             new String[][]{
+                                                                     {"%value%", plugin.getEconomyHandler().format(d)}}
+                                                            )));
             }
         } else if (d < 0.0) {
             MessageUtils.sendColoredArgumentMessage(player, plugin.getIvorySettings()

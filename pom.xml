@@ -70,7 +70,7 @@
                                     <include>se.ranzdo.bukkit:methodcommand</include>
                                     <include>org.apache.commons:commons-lang3</include>
                                     <include>net.nunnerycode.java.libraries:Cannonball</include>
-                                    <include>net.nunnerycode.bukkit:ivory-lib</include>
+                                    <include>net.nunnerycode.bukkit:ivory-config</include>
                                     <include>org.nunnerycode.bukkit:guardian</include>
                                 </includes>
                             </artifactSet>
@@ -119,6 +119,10 @@
             <id>hawk-repo</id>
             <url>http://ci.hawkfalcon.com/plugin/repository/everything/</url>
         </repository>
+        <repository>
+            <id>dsh-repo</id>
+            <url>http://repo.dsh105.com/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -137,11 +141,19 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.dsh105</groupId>
+            <artifactId>HoloAPI</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>net.nunnerycode.bukkit</groupId>
-            <artifactId>ivory-lib</artifactId>
-            <version>1.1.0</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <artifactId>ivory-config</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.nunnerycode.java.libraries</groupId>
+            <artifactId>Cannonball</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.nunnerycode.bukkit</groupId>

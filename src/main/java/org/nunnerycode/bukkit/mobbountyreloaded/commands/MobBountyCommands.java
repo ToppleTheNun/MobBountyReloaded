@@ -1,6 +1,5 @@
 package org.nunnerycode.bukkit.mobbountyreloaded.commands;
 
-import net.nunnerycode.bukkit.libraries.ivory.utils.MessageUtils;
 import org.apache.commons.lang.math.DoubleRange;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -8,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.nunnerycode.bukkit.mobbountyreloaded.MobBountyReloadedPlugin;
+import org.nunnerycode.bukkit.mobbountyreloaded.utils.MessageUtils;
 import org.nunnerycode.bukkit.mobbountyreloaded.utils.MobUtils;
 import se.ranzdo.bukkit.methodcommand.Arg;
 import se.ranzdo.bukkit.methodcommand.Command;

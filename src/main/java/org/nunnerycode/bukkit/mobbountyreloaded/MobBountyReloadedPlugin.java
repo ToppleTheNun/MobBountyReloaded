@@ -2,11 +2,12 @@ package org.nunnerycode.bukkit.mobbountyreloaded;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import net.nunnerycode.bukkit.libraries.ivory.IvoryPlugin;
 import net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryYamlConfiguration;
 import net.nunnerycode.bukkit.libraries.ivory.config.settings.IvorySettings;
+import net.nunnerycode.java.libraries.cannonball.DebugPrinter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.nunnerycode.bukkit.libraries.guardian.AbstractGuardian;
 import org.nunnerycode.bukkit.libraries.guardian.GuardianHandler;
 import org.nunnerycode.bukkit.mobbountyreloaded.api.economy.IEconomyHandler;
@@ -26,7 +27,7 @@ import java.util.logging.Level;
 
 import static net.nunnerycode.bukkit.libraries.ivory.config.VersionedIvoryConfiguration.VersionUpdateType;
 
-public final class MobBountyReloadedPlugin extends IvoryPlugin {
+public final class MobBountyReloadedPlugin extends JavaPlugin {
 
     private IvorySettings ivorySettings;
     private IMobHandler mobHandler;
@@ -40,6 +41,7 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
     private VersionedIvoryYamlConfiguration languageYAML;
     private VersionedIvoryYamlConfiguration exploitsYAML;
     private GuardianHandler guardianHandler;
+    private DebugPrinter debugPrinter;
 
     public GuardianHandler getGuardianHandler() {
         return guardianHandler;
@@ -50,7 +52,9 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
     }
 
     @Override
-    public void enable() {
+    public void onEnable() {
+        debugPrinter = new DebugPrinter(getDataFolder().getPath(), "debug.log");
+
         configYAML =
                 new VersionedIvoryYamlConfiguration(new File(getDataFolder(), "config.yml"),
                         getResource("config.yml"),
@@ -153,11 +157,6 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
         }, 20L * 3);
 
         debug(Level.INFO, "v" + getDescription().getVersion() + " enabled");
-    }
-
-    @Override
-    public void disable() {
-        // do nothing
     }
 
     public void save() {
@@ -264,6 +263,12 @@ public final class MobBountyReloadedPlugin extends IvoryPlugin {
 
     public IGroupHandler getGroupHandler() {
         return groupHandler;
+    }
+
+    public void debug(Level level, String... messages) {
+        if (debugPrinter != null) {
+            debugPrinter.debug(level, messages);
+        }
     }
 
 }
